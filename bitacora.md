@@ -1,7 +1,41 @@
 # Bitácora
 
 Registro de sesiones del semillero.
-## Sesión 5 2026-05-20
+## Sesión 8: 2026-07-15
+
+- Nueva ronda de presentaciones por la llegada de Zurley
+
+- Edison nos cuenta que para el proximo semestre no estará disponible el LIS, nos cuenta que tiene una TITAN nvidia en disposicion para el semillero.
+
+- Juanda presenta [Medebooks](https://medebooks.vercel.app/). La hizo en 36 horas contando con el limnite de Tokens. Claude pudo tomar al data de ArcGis usando sus propias capacidades. [Repositorio](https://github.com/juandaveth/medebooks) 
+
+    - Juanda habla sobre el SaasPocalypse.
+
+    - Presenta diapositivas [De producto a Metodo](https://canva.link/lga7tb1yiiecnp2)
+
+    - Presenta el problema "como replicar el flujo de trabajo en diferentes modelos cuando se acaban los tokens.
+
+    - La Alquimia introduce el concepto de Agent As a Service
+
+    - Flujo de trabajo:
+
+        1. Pedirle a claude que lo entreviste. 
+        2. Perfilar mejor al usuario real.
+        3. Gratis primero. "No voy a gastar en un dominio sin que esto genere antes. El [blog](https://medebooks.vercel.app/blog/como-construi-medebooks-con-claude-code) documenta con mas detalle.
+        4. Pedirle a claude explicaciones exahustivas para entender mejor lo que se está creando.
+
+
+    - Juan hace énfasis en el modelo de negocio de las empresas de IA y como su modelo de suscripción está subsidiado y no es sostenible.
+
+    - Recomendado, fluid voice para interactuar por voz con claude.
+
+    - Invita a cosntruir en publico y documentar en codigo abierto.
+
+- Se sostiene conversacion sobre los retos para tener codigo de AI que sea legible.
+
+- Jackie menciona claude cowork y como usa su gestor de tareas para optimizar los promps que ingresa a claude code a traves de vs code.
+
+- La Alquimia comparte un link de referido para google ai pro de 4 meses gratis.
 
 ## Sesión 7: 2026-06-10
 
