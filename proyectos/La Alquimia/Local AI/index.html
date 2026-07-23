@@ -589,10 +589,9 @@
       }
 
       .header-bar {
-        padding: 0 1.5rem;
+        padding: 0 1.25rem;
       }
 
-      /* Sidebar colapsable tipo cajón */
       .sidebar {
         position: fixed;
         top: 64px;
@@ -602,7 +601,7 @@
         height: calc(100vh - 64px);
         background-color: var(--bg-secondary);
         z-index: 90;
-        padding: 2rem 1.5rem;
+        padding: 2rem 1.25rem;
         transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         border-right: 1px solid var(--border-color);
         box-shadow: 15px 0 30px rgba(0,0,0,0.1);
@@ -618,34 +617,172 @@
 
       .content-area {
         padding-left: 0;
-        padding-top: 2rem;
+        padding-top: 1.5rem;
+        max-width: 100%;
       }
 
       h1 {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
       }
     }
 
     @media (max-width: 640px) {
+      html {
+        font-size: 15px;
+      }
+
+      body {
+        line-height: 1.75;
+        overflow-x: hidden;
+      }
+
       h1 {
-        font-size: 2.1rem;
+        font-size: 1.7rem;
+        margin-bottom: 0.5rem;
       }
       
       h2 {
-        font-size: 1.4rem;
-        margin: 3rem 0 1rem;
+        font-size: 1.25rem;
+        margin: 2.5rem 0 0.85rem;
+        padding-bottom: 0.4rem;
+      }
+
+      h3 {
+        font-size: 1.05rem;
+        margin: 1.75rem 0 0.6rem;
+      }
+
+      h4 {
+        font-size: 0.95rem;
+      }
+
+      p, li {
+        font-size: 0.95rem;
       }
 
       .header-bar {
-        padding: 0 1rem;
+        padding: 0 0.75rem;
+        height: 56px;
       }
 
       .layout-wrapper {
-        padding: 0 1rem;
+        padding: 0 0.75rem;
+      }
+
+      .content-area {
+        padding-top: 1rem;
+        padding-bottom: 2rem;
       }
 
       .card {
-        padding: 1.25rem;
+        padding: 1rem;
+        margin: 1.5rem 0;
+        border-radius: 10px;
+      }
+
+      .card pre {
+        margin-left: -0.5rem;
+        margin-right: -0.5rem;
+        border-radius: 6px;
+      }
+
+      pre {
+        padding: 0.85rem;
+        border-radius: 8px;
+        margin: 0.75rem 0 1.25rem;
+      }
+
+      pre code {
+        font-size: 0.75rem;
+      }
+
+      code {
+        font-size: 0.8rem;
+        word-break: break-word;
+      }
+
+      .table-container {
+        margin: 1rem 0 1.25rem;
+        border-radius: 8px;
+      }
+
+      table {
+        font-size: 0.78rem;
+      }
+
+      th, td {
+        padding: 0.55rem 0.6rem;
+        white-space: nowrap;
+      }
+
+      .subtitle {
+        font-size: 0.95rem;
+      }
+
+      .brand {
+        font-size: 0.9rem;
+      }
+
+      .brand span {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 170px;
+        display: inline-block;
+        vertical-align: middle;
+      }
+
+      .brand svg {
+        width: 20px;
+        height: 20px;
+        flex-shrink: 0;
+      }
+
+      .main-title-block {
+        margin-bottom: 1.5rem;
+      }
+
+      ul, ol {
+        margin-left: 1.25rem;
+      }
+
+      .sidebar {
+        width: 280px;
+        left: -300px;
+        padding: 1.5rem 1rem;
+      }
+
+      .copy-button {
+        opacity: 1;
+        padding: 0.25rem 0.5rem;
+        font-size: 0.7rem;
+      }
+
+      .theme-toggle-btn, .mobile-menu-btn {
+        width: 36px;
+        height: 36px;
+      }
+
+      .header-controls {
+        gap: 0.6rem;
+      }
+    }
+
+    @media (max-width: 400px) {
+      h1 {
+        font-size: 1.4rem;
+      }
+
+      .brand span {
+        max-width: 120px;
+      }
+
+      .layout-wrapper {
+        padding: 0 0.6rem;
+      }
+
+      .header-bar {
+        padding: 0 0.6rem;
       }
     }
   </style>
@@ -654,7 +791,7 @@
 
   <!-- ==========================================
        HEADER BAR 
-       ========================================= */ -->
+       ========================================= -->
   <header class="header-bar">
     <div class="brand">
       <!-- Icono SVG Minimalista de Tecnología -->
@@ -698,7 +835,7 @@
 
   <!-- ==========================================
        CUERPO PRINCIPAL (LAYOUT)
-       ========================================= */ -->
+       ========================================= -->
   <div class="layout-wrapper">
     
     <!-- BARRA LATERAL (TABLA DE CONTENIDOS Y FILTRO) -->
@@ -811,31 +948,38 @@ curl -fsSL https://ollama.com/install.sh | sh
             <tbody>
               <tr>
                 <td><strong>8 GB</strong></td>
-                <td><code>llama3.2:1b</code> o <code>qwen2.5:1.5b</code></td>
-                <td>~1.0 GB</td>
-                <td>Baja latencia, pruebas de flujo básicas</td>
+                <td><code>llama3.2:1b</code>, <code>qwen2.5:1.5b</code> o <code>gemma4:e2b</code></td>
+                <td>~1.0 - 7.2 GB</td>
+                <td>Baja latencia, edge, texto+imagen+audio</td>
               </tr>
               <tr>
                 <td><strong>16 GB</strong></td>
-                <td><code>llama3.1:8b</code> o <code>qwen2.5-coder:7b</code></td>
-                <td>~4.7 GB</td>
-                <td>Uso general, programación fluida, razonamiento medio</td>
+                <td><code>llama3.1:8b</code>, <code>qwen2.5-coder:7b</code> o <code>gemma4:12b</code></td>
+                <td>~4.7 - 7.6 GB</td>
+                <td>Uso general, programación, multimodal (256K ctx)</td>
+              </tr>
+              <tr>
+                <td><strong>24 GB</strong></td>
+                <td><code>qwen2.5-coder:14b</code> o <code>gemma4:26b</code> (MoE Q4)</td>
+                <td>~9.0 - 18 GB</td>
+                <td>Sweet spot calidad/velocidad, 4B activos de 26B</td>
               </tr>
               <tr>
                 <td><strong>32 GB</strong></td>
-                <td><code>qwen2.5-coder:14b</code> o <code>llama3.1:8b-instruct</code></td>
-                <td>~9.0 GB</td>
-                <td>Desarrollo profesional de software, lógica impecable</td>
+                <td><code>gemma4:31b</code> (Q4) o <code>gemma4:26b</code> (Q8)</td>
+                <td>~18 - 20 GB</td>
+                <td>Calidad densa 31B, 256K contexto nativo</td>
               </tr>
               <tr>
-                <td><strong>64 GB+</strong></td>
-                <td><code>llama3:70b</code> (Q4) o <code>mixtral:8x7b</code></td>
-                <td>~40 GB</td>
+                <td><strong>48 GB+</strong></td>
+                <td><code>llama3:70b</code> (Q4), <code>mixtral:8x7b</code> o <code>gemma4:31b</code> (BF16)</td>
+                <td>~40 - 70 GB</td>
                 <td>Calidad premium comparable a servicios cloud comerciales</td>
               </tr>
             </tbody>
           </table>
         </div>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: -0.75rem;">Gemma 4 E2B/E4B tienen 128K de contexto nativo; 12B/26B/31B tienen 256K. Todos con licencia Apache 2.0. <a href="https://ollama.com/library/gemma4" target="_blank">ollama.com/library/gemma4</a></p>
 
         <pre><code class="language-bash"># Descargar y levantar un modelo en modo interactivo
 ollama run qwen2.5-coder:7b
@@ -846,34 +990,70 @@ ollama ps
 # Servidor API por defecto en http://localhost:11434
 ollama serve</code></pre>
 
-        <!-- Context Window Callout -->
+          <!-- Context Window Callout -->
         <div class="card purple">
           <span class="badge">IMPORTANTE</span>
-          <strong style="display: block; margin-bottom: 0.5rem; color: var(--text-primary);">Configuración de Context Window y Variables del Sistema</strong>
-          <p style="margin-bottom: 0.75rem;">Por defecto, Ollama establece un contexto de 2048 tokens. Para flujos complejos y ejecución con agentes inteligentes (como OpenCode y Hermes), requieres al menos <strong>64K</strong> (mínimo obligatorio de Hermes) o idealmente <strong>128K</strong>. Además, para soportar llamadas en paralelo de subagentes paralelos sin que se bloqueen, debes configurar concurrencia masiva.</p>
+          <strong style="display: block; margin-bottom: 0.5rem; color: var(--text-primary);">Configuración del Context Window (num_ctx)</strong>
+          <p style="margin-bottom: 0.75rem;">Ollama usa por defecto <strong>2048</strong> tokens de contexto, pero desde la versión 0.6+ ajusta automáticamente según VRAM (&lt;24 GB = 4K, 24-48 GB = 32K, ≥48 GB = 256K). Para agentes como OpenCode y Hermes necesitas al menos <strong>64K</strong> tokens. El contexto se configura mediante <code>num_ctx</code> — si el valor excede el límite del modelo, se trunca automáticamente al máximo soportado.</p>
           
-          <pre style="margin-top: 0.5rem; margin-bottom: 0.5rem;"><code class="language-bash"># --- EN CASO DE MAC (Permanente vía LaunchAgents) ---
-# Modifica tu ~/Library/LaunchAgents/org.ollama.ollama.plist para inyectar estas claves:
-&lt;key&gt;EnvironmentVariables&lt;/key&gt;
-&lt;dict&gt;
-  &lt;key&gt;OLLAMA_NUM_PARALLEL&lt;/key&gt;
-  &lt;string&gt;4&lt;/string&gt;
-  &lt;key&gt;OLLAMA_MAX_LOADED_MODELS&lt;/key&gt;
-  &lt;string&gt;2&lt;/string&gt;
-&lt;/dict&gt;
+          <h4 style="margin-top: 1.25rem; margin-bottom: 0.5rem;">Opción 1: Variable de entorno global (para todos los modelos)</h4>
+          <pre style="margin-top: 0.25rem; margin-bottom: 0.5rem;"><code class="language-bash"># Arrancar el servidor con contexto de 64K tokens
+OLLAMA_CONTEXT_LENGTH=64000 ollama serve
 
-# --- EN CASO DE LINUX (Permanente con systemd) ---
-# Executa: sudo systemctl edit ollama.service
-# Agrega las siguientes líneas bajo la sección [Service]:
-[Service]
-Environment="OLLAMA_NUM_PARALLEL=4"
-Environment="OLLAMA_MAX_LOADED_MODELS=2"
+# En macOS (permanente vía LaunchAgents), agrega al plist:
+# &lt;key&gt;EnvironmentVariables&lt;/key&gt;&lt;dict&gt;
+#   &lt;key&gt;OLLAMA_CONTEXT_LENGTH&lt;/key&gt;&lt;string&gt;64000&lt;/string&gt;
+# &lt;/dict&gt;
 
-# Reinicia el daemon y el servicio:
-sudo systemctl daemon-reload && sudo systemctl restart ollama</code></pre>
+# En Linux (permanente con systemd):
+# sudo systemctl edit ollama.service
+# [Service]
+# Environment="OLLAMA_CONTEXT_LENGTH=64000"
+# sudo systemctl daemon-reload && sudo systemctl restart ollama</code></pre>
+
+          <h4 style="margin-top: 1.25rem; margin-bottom: 0.5rem;">Opción 2: Por modelo vía Modelfile (recomendado)</h4>
+          <pre style="margin-top: 0.25rem; margin-bottom: 0.5rem;"><code class="language-bash"># Crear un Modelfile con contexto persistente para el modelo
+cat > Modelfile << 'EOF'
+FROM qwen2.5-coder:7b
+PARAMETER num_ctx 65536
+EOF
+
+# Construir el nuevo modelo con el contexto fijado
+ollama create qwen2.5-coder:7b-64k -f Modelfile
+
+# Usar el nuevo modelo
+ollama run qwen2.5-coder:7b-64k</code></pre>
+
+          <h4 style="margin-top: 1.25rem; margin-bottom: 0.5rem;">Opción 3: Por solicitud API (por llamada)</h4>
+          <pre style="margin-top: 0.25rem; margin-bottom: 0.5rem;"><code class="language-bash">curl http://localhost:11434/api/generate -d '{
+  "model": "qwen2.5-coder:7b",
+  "prompt": "Tu prompt largo aquí...",
+  "options": {
+    "num_ctx": 65536
+  }
+}'</code></pre>
+
+          <h4 style="margin-top: 1.25rem; margin-bottom: 0.5rem;">Opción 4: Interactivo (sesión temporal)</h4>
+          <pre style="margin-top: 0.25rem; margin-bottom: 0.5rem;"><code class="language-bash">ollama run qwen2.5-coder:7b
+# Dentro de la sesión:
+/set parameter num_ctx 65536</code></pre>
+
+          <h4 style="margin-top: 1.25rem; margin-bottom: 0.5rem;">Concurrencia y modelos paralelos</h4>
+          <pre style="margin-top: 0.25rem; margin-bottom: 0.5rem;"><code class="language-bash"># Variables de entorno adicionales para concurrencia:
+OLLAMA_NUM_PARALLEL=4     # Solicitudes paralelas por modelo (default: 1)
+OLLAMA_MAX_LOADED_MODELS=2 # Modelos simultáneos en memoria
+
+# macOS (LaunchAgents):
+# &lt;key&gt;OLLAMA_NUM_PARALLEL&lt;/key&gt;&lt;string&gt;4&lt;/string&gt;
+# &lt;key&gt;OLLAMA_MAX_LOADED_MODELS&lt;/key&gt;&lt;string&gt;2&lt;/string&gt;
+
+# Linux (systemd):
+# Environment="OLLAMA_NUM_PARALLEL=4"
+# Environment="OLLAMA_MAX_LOADED_MODELS=2"</code></pre>
+
           <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem; margin-bottom: 0;">
             <a href="https://docs.ollama.com/context-length" target="_blank">Documentación Oficial de Context Length</a> · 
-            <a href="https://hermes-agent.nousresearch.com/docs/getting-started/quickstart" target="_blank">Requisitos de Contexto en Hermes</a>
+            <a href="https://docs.ollama.com/modelfile" target="_blank">Referencia de Modelfile</a>
           </p>
         </div>
       </section>
@@ -1222,14 +1402,14 @@ hermes cron list</code></pre>
 
   <!-- ==========================================
        FOOTER
-       ========================================= */ -->
+       ========================================= -->
   <footer>
     <p>La Alquimia &mdash; Local AI &mdash; Guía de Desarrollo Profesional &mdash; Julio 2026</p>
   </footer>
 
   <!-- ==========================================
        COMPORTAMIENTOS JAVASCRIPT (FRONTEND)
-       ========================================= */ -->
+       ========================================= -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       
@@ -1337,21 +1517,64 @@ hermes cron list</code></pre>
         observer.observe(section);
       });
 
-      // 5. MENÚ MÓVIL (TOGGLE)
+      // 5. MENÚ MÓVIL (TOGGLE + OVERLAY)
       const menuToggle = document.getElementById('menu-toggle');
       const sidebar = document.getElementById('sidebar');
+      let overlay;
+
+      function createOverlay() {
+        overlay = document.createElement('div');
+        overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:80;opacity:0;transition:opacity 0.3s ease;pointer-events:none;';
+        document.body.appendChild(overlay);
+
+        overlay.addEventListener('click', (e) => {
+          e.stopPropagation();
+          closeSidebar();
+        });
+
+        overlay.addEventListener('touchmove', (e) => {
+          e.preventDefault();
+        }, { passive: false });
+      }
+
+      function openSidebar() {
+        if (!overlay) createOverlay();
+        sidebar.classList.add('open');
+        overlay.style.pointerEvents = 'auto';
+        requestAnimationFrame(() => { overlay.style.opacity = '1'; });
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeSidebar() {
+        sidebar.classList.remove('open');
+        if (overlay) {
+          overlay.style.opacity = '0';
+          overlay.style.pointerEvents = 'none';
+        }
+        document.body.style.overflow = '';
+      }
 
       menuToggle.addEventListener('click', (e) => {
         e.stopPropagation();
-        sidebar.classList.toggle('open');
+        if (sidebar.classList.contains('open')) {
+          closeSidebar();
+        } else {
+          openSidebar();
+        }
       });
 
-      document.addEventListener('click', () => {
-        sidebar.classList.remove('open');
+      // Cerrar sidebar al hacer clic en un enlace (móvil)
+      sidebar.querySelectorAll('.sidebar-link').forEach(link => {
+        link.addEventListener('click', () => {
+          if (window.innerWidth < 1024) closeSidebar();
+        });
       });
 
-      sidebar.addEventListener('click', (e) => {
-        e.stopPropagation();
+      // Cerrar con Escape
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+          closeSidebar();
+        }
       });
 
     });
