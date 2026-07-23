@@ -1,0 +1,1619 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Local AI — La Alquimia</title>
+  
+  <!-- Google Fonts: Inter para texto, JetBrains Mono para código -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================
+       VARIABLES Y PALETA DE COLORES (OLLAMA THEME)
+       ========================================= */
+    :root {
+      /* Modo Oscuro (Predeterminado) - Inspirado en ollama.com */
+      --bg-primary: #000000;
+      --bg-secondary: #0c0c0d;
+      --bg-tertiary: #161618;
+      --border-color: #242427;
+      --border-hover: #3a3a3f;
+      --text-primary: #f5f5f7;
+      --text-secondary: #a1a1aa;
+      --text-muted: #6b6b75;
+      
+      --accent-color: #84cc16; /* Verde lima radiante */
+      --accent-secondary: #eab308; /* Amarillo vibrante */
+      --accent-glow: rgba(132, 204, 22, 0.15);
+      --accent-glow-blue: rgba(234, 179, 8, 0.15);
+      --badge-bg: #1a2e05;
+      --badge-text: #a3e635;
+      
+      --code-bg: #0e0e10;
+      --code-border: #1f1f23;
+      --code-text: #2dd4bf; /* Turquesa suave para inline code */
+      
+      --table-header: #1a2e05;
+      --table-header-text: #a3e635;
+      --table-row-hover: #111113;
+      
+      --sidebar-width: 280px;
+    }
+
+    [data-theme="light"] {
+      /* Modo Claro - Stark, limpio, de alta gama */
+      --bg-primary: #ffffff;
+      --bg-secondary: #fafafa;
+      --bg-tertiary: #f1f1f4;
+      --border-color: #e4e4e7;
+      --border-hover: #d4d4d8;
+      --text-primary: #09090b;
+      --text-secondary: #4b5563;
+      --text-muted: #88888b;
+      
+      --accent-color: #65a30d; /* Verde lima corporativo */
+      --accent-secondary: #ca8a04; /* Amarillo corporativo */
+      --accent-glow: rgba(101, 163, 13, 0.08);
+      --accent-glow-blue: rgba(202, 138, 4, 0.08);
+      --badge-bg: #f7fee7;
+      --badge-text: #4d7c0f;
+      
+      --code-bg: #f4f4f5;
+      --code-border: #e4e4e7;
+      --code-text: #0d9488; /* Turquesa oscuro */
+      
+      --table-header: #f7fee7;
+      --table-header-text: #4d7c0f;
+      --table-row-hover: #fafafa;
+    }
+
+    /* ==========================================
+       ESTILOS GLOBALES Y CONTENEDORES
+       ========================================= */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      font-weight: 400;
+      line-height: 1.625;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      transition: background-color 0.3s ease, color 0.3s ease;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    a {
+      color: var(--accent-color);
+      text-decoration: none;
+      transition: color 0.15s ease, border-color 0.15s ease;
+      border-bottom: 1px solid transparent;
+    }
+
+    a:hover {
+      color: var(--text-primary);
+      border-bottom-color: var(--text-primary);
+    }
+
+    /* Scrollbar minimalista */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-primary);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--border-color);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--border-hover);
+    }
+
+    /* ==========================================
+       HEADER Y CONTROLADORES
+       ========================================= */
+    .header-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background-color: rgba(12, 12, 13, 0.8);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    [data-theme="light"] .header-bar {
+      background-color: rgba(255, 255, 255, 0.8);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .brand svg {
+      width: 24px;
+      height: 24px;
+      fill: var(--text-primary);
+      transition: fill 0.3s ease;
+    }
+
+    .brand span {
+      background: linear-gradient(135deg, var(--text-primary) 30%, var(--accent-color));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .theme-toggle-btn, .mobile-menu-btn {
+      background: none;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--text-secondary);
+      transition: all 0.2s ease;
+    }
+
+    .theme-toggle-btn:hover {
+      border-color: var(--border-hover);
+      color: var(--text-primary);
+      background-color: var(--bg-secondary);
+    }
+
+    .theme-toggle-btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .theme-toggle-btn .sun-icon {
+      display: none;
+    }
+
+    [data-theme="light"] .theme-toggle-btn .moon-icon {
+      display: none;
+    }
+
+    [data-theme="light"] .theme-toggle-btn .sun-icon {
+      display: block;
+    }
+
+    .mobile-menu-btn {
+      display: none;
+    }
+
+    /* ==========================================
+       DISEÑO DE DOS COLUMNAS (LAYOUT)
+       ========================================= */
+    .layout-wrapper {
+      display: flex;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* Lateral: Tabla de Contenidos */
+    .sidebar {
+      width: var(--sidebar-width);
+      position: sticky;
+      top: 96px;
+      height: calc(100vh - 120px);
+      overflow-y: auto;
+      padding-right: 1.5rem;
+      padding-top: 2rem;
+      border-right: 1px solid var(--border-color);
+      flex-shrink: 0;
+      transition: border-color 0.3s ease;
+    }
+
+    /* Buscador en Barra Lateral */
+    .search-box {
+      margin-bottom: 2rem;
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 0.6rem 0.75rem 0.6rem 2.2rem;
+      font-family: inherit;
+      font-size: 0.85rem;
+      color: var(--text-primary);
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .search-input:focus {
+      border-color: var(--accent-color);
+      box-shadow: 0 0 0 1px var(--accent-color);
+    }
+
+    .search-box svg {
+      position: absolute;
+      left: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    /* Navegación de la Sidebar */
+    .sidebar-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+
+    .sidebar-nav {
+      list-style-type: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .sidebar-link {
+      display: block;
+      padding: 0.5rem 0.75rem;
+      border-radius: 6px;
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .sidebar-link:hover {
+      color: var(--text-primary);
+      background-color: var(--bg-secondary);
+      border-bottom-color: transparent;
+    }
+
+    .sidebar-link.active {
+      color: var(--text-primary);
+      background-color: var(--bg-tertiary);
+      border-left: 3px solid var(--accent-color);
+      border-radius: 0 6px 6px 0;
+      padding-left: calc(0.75rem - 3px);
+    }
+
+    /* Contenido Principal */
+    .content-area {
+      flex-grow: 1;
+      max-width: 900px;
+      padding: 2rem 0 4rem 3.5rem;
+    }
+
+    /* ==========================================
+       ESTILOS DE ELEMENTOS DE CONTENIDO
+       ========================================= */
+    .main-title-block {
+      margin-bottom: 3.5rem;
+    }
+
+    h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.04em;
+      margin-bottom: 0.75rem;
+      background: linear-gradient(135deg, var(--text-primary) 40%, var(--accent-color), var(--accent-secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.2rem;
+      font-weight: 400;
+      line-height: 1.5;
+    }
+
+    /* Títulos de secciones */
+    h2 {
+      font-size: 1.65rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin: 4rem 0 1.25rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-primary);
+      scroll-margin-top: 90px; /* Para que al clickar scroll no quede oculto detrás de la barra */
+    }
+
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin: 2.5rem 0 0.85rem;
+      color: var(--text-primary);
+    }
+
+    h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin: 1.5rem 0 0.5rem;
+      color: var(--text-primary);
+    }
+
+    p {
+      margin-bottom: 1.25rem;
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+    }
+
+    ul, ol {
+      margin: 0.75rem 0 1.5rem 1.5rem;
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+
+    li {
+      margin-bottom: 0.4rem;
+    }
+
+    strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    /* Inline Code */
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      font-size: 0.85rem;
+      background-color: var(--code-bg);
+      border: 1px solid var(--code-border);
+      color: var(--code-text);
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    /* Bloques de Código de Terminal o Scripts */
+    pre {
+      background-color: var(--pre-bg);
+      border: 1px solid var(--pre-border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      overflow-x: auto;
+      margin: 1rem 0 1.75rem;
+      position: relative;
+      transition: background-color 0.3s ease;
+    }
+
+    pre code {
+      background: none;
+      border: none;
+      padding: 0;
+      color: var(--pre-text);
+      font-size: 0.85rem;
+      line-height: 1.5;
+      display: block;
+    }
+
+    /* Botón de Copiado en Bloques de Código */
+    .copy-button {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 0.35rem 0.6rem;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      opacity: 0;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    pre:hover .copy-button {
+      opacity: 1;
+    }
+
+    .copy-button:hover {
+      background-color: var(--bg-tertiary);
+      border-color: var(--border-hover);
+      color: var(--text-primary);
+    }
+
+    .copy-button.copied {
+      background-color: rgba(34, 197, 94, 0.1);
+      border-color: #22c55e;
+      color: #22c55e;
+    }
+
+    /* Tablas de Referencia - Diseño Impecable */
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      margin: 1.5rem 0 2rem;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      text-align: left;
+    }
+
+    th {
+      background-color: var(--table-header);
+      color: var(--table-header-text);
+      font-weight: 600;
+      padding: 0.85rem 1rem;
+      border-bottom: 2px solid var(--border-color);
+    }
+
+    td {
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-secondary);
+      background-color: var(--bg-secondary);
+      transition: background-color 0.15s ease;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background-color: var(--table-row-hover);
+    }
+
+    /* ==========================================
+       TARJETAS EXPLICATIVAS (CALLOUT CARDS)
+       ========================================= */
+    .card {
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.75rem;
+      margin: 2rem 0;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+
+    .card:hover {
+      border-color: var(--border-hover);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+
+    .card h3 {
+      margin-top: 0;
+    }
+
+    /* Variantes con borde izquierdo de color (Tips, Advertencias) */
+    .card.purple {
+      border-left: 4px solid var(--accent-color);
+      background: linear-gradient(to right, var(--accent-glow) 0%, var(--bg-secondary) 100%);
+    }
+
+    .card.blue {
+      border-left: 4px solid var(--accent-secondary);
+      background: linear-gradient(to right, var(--accent-glow-blue) 0%, var(--bg-secondary) 100%);
+    }
+
+    .card.green {
+      border-left: 4px solid #22c55e;
+      background: linear-gradient(to right, rgba(34, 197, 94, 0.05) 0%, var(--bg-secondary) 100%);
+    }
+
+    .badge {
+      display: inline-block;
+      background-color: var(--badge-bg);
+      color: var(--badge-text);
+      padding: 0.15rem 0.6rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-right: 0.4rem;
+      letter-spacing: -0.01em;
+      transition: background-color 0.3s ease;
+    }
+
+    /* ==========================================
+       FOOTER Y ACABADOS
+       ========================================= */
+    footer {
+      border-top: 1px solid var(--border-color);
+      margin-top: 6rem;
+      padding: 2.5rem 0;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      transition: border-color 0.3s ease;
+    }
+
+    /* Highlight en textos buscados */
+    .text-highlight {
+      background-color: rgba(234, 179, 8, 0.2);
+      border-bottom: 2px solid #eab308;
+      border-radius: 2px;
+    }
+
+    /* ==========================================
+       MEDIA QUERIES (ADAPTABILIDAD RESPONSIVA)
+       ========================================= */
+    @media (max-width: 1023px) {
+      .layout-wrapper {
+        padding: 0 1.5rem;
+      }
+
+      .header-bar {
+        padding: 0 1.25rem;
+      }
+
+      .sidebar {
+        position: fixed;
+        top: 64px;
+        left: -320px;
+        bottom: 0;
+        width: 300px;
+        height: calc(100vh - 64px);
+        background-color: var(--bg-secondary);
+        z-index: 90;
+        padding: 2rem 1.25rem;
+        transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        border-right: 1px solid var(--border-color);
+        box-shadow: 15px 0 30px rgba(0,0,0,0.1);
+      }
+
+      .sidebar.open {
+        left: 0;
+      }
+
+      .mobile-menu-btn {
+        display: flex;
+      }
+
+      .content-area {
+        padding-left: 0;
+        padding-top: 1.5rem;
+        max-width: 100%;
+      }
+
+      h1 {
+        font-size: 2.2rem;
+      }
+    }
+
+    @media (max-width: 640px) {
+      html {
+        font-size: 15px;
+      }
+
+      body {
+        line-height: 1.75;
+        overflow-x: hidden;
+      }
+
+      h1 {
+        font-size: 1.7rem;
+        margin-bottom: 0.5rem;
+      }
+      
+      h2 {
+        font-size: 1.25rem;
+        margin: 2.5rem 0 0.85rem;
+        padding-bottom: 0.4rem;
+      }
+
+      h3 {
+        font-size: 1.05rem;
+        margin: 1.75rem 0 0.6rem;
+      }
+
+      h4 {
+        font-size: 0.95rem;
+      }
+
+      p, li {
+        font-size: 0.95rem;
+      }
+
+      .header-bar {
+        padding: 0 0.75rem;
+        height: 56px;
+      }
+
+      .layout-wrapper {
+        padding: 0 0.75rem;
+      }
+
+      .content-area {
+        padding-top: 1rem;
+        padding-bottom: 2rem;
+      }
+
+      .card {
+        padding: 1rem;
+        margin: 1.5rem 0;
+        border-radius: 10px;
+      }
+
+      .card pre {
+        margin-left: -0.5rem;
+        margin-right: -0.5rem;
+        border-radius: 6px;
+      }
+
+      pre {
+        padding: 0.85rem;
+        border-radius: 8px;
+        margin: 0.75rem 0 1.25rem;
+      }
+
+      pre code {
+        font-size: 0.75rem;
+      }
+
+      code {
+        font-size: 0.8rem;
+        word-break: break-word;
+      }
+
+      .table-container {
+        margin: 1rem 0 1.25rem;
+        border-radius: 8px;
+      }
+
+      table {
+        font-size: 0.78rem;
+      }
+
+      th, td {
+        padding: 0.55rem 0.6rem;
+        white-space: nowrap;
+      }
+
+      .subtitle {
+        font-size: 0.95rem;
+      }
+
+      .brand {
+        font-size: 0.9rem;
+      }
+
+      .brand span {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 170px;
+        display: inline-block;
+        vertical-align: middle;
+      }
+
+      .brand svg {
+        width: 20px;
+        height: 20px;
+        flex-shrink: 0;
+      }
+
+      .main-title-block {
+        margin-bottom: 1.5rem;
+      }
+
+      ul, ol {
+        margin-left: 1.25rem;
+      }
+
+      .sidebar {
+        width: 280px;
+        left: -300px;
+        padding: 1.5rem 1rem;
+      }
+
+      .copy-button {
+        opacity: 1;
+        padding: 0.25rem 0.5rem;
+        font-size: 0.7rem;
+      }
+
+      .theme-toggle-btn, .mobile-menu-btn {
+        width: 36px;
+        height: 36px;
+      }
+
+      .header-controls {
+        gap: 0.6rem;
+      }
+    }
+
+    @media (max-width: 400px) {
+      h1 {
+        font-size: 1.4rem;
+      }
+
+      .brand span {
+        max-width: 120px;
+      }
+
+      .layout-wrapper {
+        padding: 0 0.6rem;
+      }
+
+      .header-bar {
+        padding: 0 0.6rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================
+       HEADER BAR 
+       ========================================= -->
+  <header class="header-bar">
+    <div class="brand">
+      <!-- Icono SVG Minimalista de Tecnología -->
+      <svg viewBox="0 0 24 24">
+        <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6A6,6 0 0,0 6,12A6,6 0 0,0 12,18A6,6 0 0,0 18,12A6,6 0 0,0 12,6M12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8Z"/>
+      </svg>
+      <span>Local AI · La Alquimia</span>
+    </div>
+    
+    <div class="header-controls">
+      <!-- Botón de Modo Claro / Oscuro -->
+      <button class="theme-toggle-btn" id="theme-toggle" aria-label="Cambiar tema">
+        <!-- Ícono de Luna para Modo Oscuro -->
+        <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <!-- Ícono de Sol para Modo Claro -->
+        <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+      </button>
+
+      <!-- Botón de Menú en Móviles -->
+      <button class="mobile-menu-btn" id="menu-toggle" aria-label="Menú de Navegación">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ==========================================
+       CUERPO PRINCIPAL (LAYOUT)
+       ========================================= -->
+  <div class="layout-wrapper">
+    
+    <!-- BARRA LATERAL (TABLA DE CONTENIDOS Y FILTRO) -->
+    <aside class="sidebar" id="sidebar">
+      <div class="search-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="search-input" class="search-input" placeholder="Buscar en la guía...">
+      </div>
+
+      <nav>
+        <div class="sidebar-title">Contenido</div>
+        <ul class="sidebar-nav" id="sidebar-menu">
+          <li><a href="#cli" class="sidebar-link">1. La terminal (CLI)</a></li>
+          <li><a href="#ollama" class="sidebar-link">2. Ollama — Servidor Local</a></li>
+          <li><a href="#lmstudio" class="sidebar-link">3. LM Studio — Interfaz GGUF</a></li>
+          <li><a href="#opencode" class="sidebar-link">4. OpenCode — Agente Libre</a></li>
+          <li><a href="#hermes" class="sidebar-link">5. Hermes Agent — Runtime</a></li>
+          <li><a href="#opencode-local" class="sidebar-link">6. OpenCode + Servidores Locales</a></li>
+          <li><a href="#hermes-benefits" class="sidebar-link">7. Beneficios de Hermes</a></li>
+          <li><a href="#gateway" class="sidebar-link">8. Gateway Multi-Canal</a></li>
+          <li><a href="#credential-pools" class="sidebar-link">9. Credential Pools</a></li>
+          <li><a href="#cron" class="sidebar-link">10. Automatización /cron</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- AREA DE CONTENIDO PRINCIPAL -->
+    <main class="content-area">
+      
+      <div class="main-title-block">
+        <h1>Local AI</h1>
+        <p class="subtitle">Guía práctica profesional para montar tu agente de IA local resiliente usando Ollama, LM Studio, OpenCode y Hermes.</p>
+      </div>
+
+      <!-- ============= 1 ============= -->
+      <section id="cli-section">
+        <h2 id="cli">1. La terminal (CLI)</h2>
+        <p>La terminal o línea de comandos representa la base operativa de todo desarrollo local. Es el entorno idóneo para depurar, orquestar y controlar los servicios sin sobrecarga de interfaz gráfica.</p>
+        
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Acción</th>
+                <th>macOS / Linux</th>
+                <th>Windows (PowerShell)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Listar archivos</strong></td>
+                <td><code>ls</code> o <code>ls -la</code></td>
+                <td><code>ls</code> o <code>Get-ChildItem</code></td>
+              </tr>
+              <tr>
+                <td><strong>Cambiar directorio</strong></td>
+                <td><code>cd ruta</code></td>
+                <td><code>cd ruta</code></td>
+              </tr>
+              <tr>
+                <td><strong>Crear carpeta</strong></td>
+                <td><code>mkdir nombre</code></td>
+                <td><code>mkdir nombre</code></td>
+              </tr>
+              <tr>
+                <td><strong>Comando con privilegios</strong></td>
+                <td><code>sudo comando</code></td>
+                <td>Iniciar PowerShell como Administrador</td>
+              </tr>
+              <tr>
+                <td><strong>Ruta de configuración</strong></td>
+                <td><code>~/.hermes/</code> o <code>~/.config/</code></td>
+                <td><code>$HOME\.hermes\</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ============= 2 ============= -->
+      <section id="ollama-section">
+        <h2 id="ollama">2. Ollama — Modelos locales ultra-rápidos</h2>
+        <p><a href="https://ollama.com" target="_blank" rel="noopener">Ollama</a> empaqueta y corre LLMs locales bajo un motor minimalista y potente basado en <code>llama.cpp</code>. Permite descargar, instanciar y consultar modelos vía terminal o API en minutos.</p>
+        
+        <pre><code class="language-bash"># Instalar en macOS
+brew install ollama
+
+# Instalar en Linux
+curl -fsSL https://ollama.com/install.sh | sh
+
+# Instalar en Windows
+# Descarga e instala directamente el instalador oficial desde ollama.com/download</code></pre>
+
+        <h3>Qué modelo elegir según tu VRAM / RAM</h3>
+        <p>Ollama corre bajo cuantizaciones estándar. Elige el tamaño del modelo basándote estrictamente en tu memoria disponible para evitar desbordamientos al disco (Swap) que destrozan la velocidad de inferencia:</p>
+        
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>RAM / VRAM</th>
+                <th>Modelo recomendado</th>
+                <th>Tamaño</th>
+                <th>Propósito Principal</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>8 GB</strong></td>
+                <td><code>llama3.2:1b</code>, <code>qwen2.5:1.5b</code> o <code>gemma4:e2b</code></td>
+                <td>~1.0 - 7.2 GB</td>
+                <td>Baja latencia, edge, texto+imagen+audio</td>
+              </tr>
+              <tr>
+                <td><strong>16 GB</strong></td>
+                <td><code>llama3.1:8b</code>, <code>qwen2.5-coder:7b</code> o <code>gemma4:12b</code></td>
+                <td>~4.7 - 7.6 GB</td>
+                <td>Uso general, programación, multimodal (256K ctx)</td>
+              </tr>
+              <tr>
+                <td><strong>24 GB</strong></td>
+                <td><code>qwen2.5-coder:14b</code> o <code>gemma4:26b</code> (MoE Q4)</td>
+                <td>~9.0 - 18 GB</td>
+                <td>Sweet spot calidad/velocidad, 4B activos de 26B</td>
+              </tr>
+              <tr>
+                <td><strong>32 GB</strong></td>
+                <td><code>gemma4:31b</code> (Q4) o <code>gemma4:26b</code> (Q8)</td>
+                <td>~18 - 20 GB</td>
+                <td>Calidad densa 31B, 256K contexto nativo</td>
+              </tr>
+              <tr>
+                <td><strong>48 GB+</strong></td>
+                <td><code>llama3:70b</code> (Q4), <code>mixtral:8x7b</code> o <code>gemma4:31b</code> (BF16)</td>
+                <td>~40 - 70 GB</td>
+                <td>Calidad premium comparable a servicios cloud comerciales</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: -0.75rem;">Gemma 4 E2B/E4B tienen 128K de contexto nativo; 12B/26B/31B tienen 256K. Todos con licencia Apache 2.0. <a href="https://ollama.com/library/gemma4" target="_blank">ollama.com/library/gemma4</a></p>
+
+        <pre><code class="language-bash"># Descargar y levantar un modelo en modo interactivo
+ollama run qwen2.5-coder:7b
+
+# Monitorear modelos en memoria activos
+ollama ps
+
+# Servidor API por defecto en http://localhost:11434
+ollama serve</code></pre>
+
+          <!-- Context Window Callout -->
+        <div class="card purple">
+          <span class="badge">IMPORTANTE</span>
+          <strong style="display: block; margin-bottom: 0.5rem; color: var(--text-primary);">Configuración del Context Window (num_ctx)</strong>
+          <p style="margin-bottom: 0.75rem;">Ollama usa por defecto <strong>2048</strong> tokens de contexto, pero desde la versión 0.6+ ajusta automáticamente según VRAM (&lt;24 GB = 4K, 24-48 GB = 32K, ≥48 GB = 256K). Para agentes como OpenCode y Hermes necesitas al menos <strong>64K</strong> tokens. El contexto se configura mediante <code>num_ctx</code> — si el valor excede el límite del modelo, se trunca automáticamente al máximo soportado.</p>
+          
+          <h4 style="margin-top: 1.25rem; margin-bottom: 0.5rem;">Opción 1: Variable de entorno global (para todos los modelos)</h4>
+          <pre style="margin-top: 0.25rem; margin-bottom: 0.5rem;"><code class="language-bash"># Arrancar el servidor con contexto de 64K tokens
+OLLAMA_CONTEXT_LENGTH=64000 ollama serve
+
+# En macOS (permanente vía LaunchAgents), agrega al plist:
+# &lt;key&gt;EnvironmentVariables&lt;/key&gt;&lt;dict&gt;
+#   &lt;key&gt;OLLAMA_CONTEXT_LENGTH&lt;/key&gt;&lt;string&gt;64000&lt;/string&gt;
+# &lt;/dict&gt;
+
+# En Linux (permanente con systemd):
+# sudo systemctl edit ollama.service
+# [Service]
+# Environment="OLLAMA_CONTEXT_LENGTH=64000"
+# sudo systemctl daemon-reload && sudo systemctl restart ollama</code></pre>
+
+          <h4 style="margin-top: 1.25rem; margin-bottom: 0.5rem;">Opción 2: Por modelo vía Modelfile (recomendado)</h4>
+          <pre style="margin-top: 0.25rem; margin-bottom: 0.5rem;"><code class="language-bash"># Crear un Modelfile con contexto persistente para el modelo
+cat > Modelfile << 'EOF'
+FROM qwen2.5-coder:7b
+PARAMETER num_ctx 65536
+EOF
+
+# Construir el nuevo modelo con el contexto fijado
+ollama create qwen2.5-coder:7b-64k -f Modelfile
+
+# Usar el nuevo modelo
+ollama run qwen2.5-coder:7b-64k</code></pre>
+
+          <h4 style="margin-top: 1.25rem; margin-bottom: 0.5rem;">Opción 3: Por solicitud API (por llamada)</h4>
+          <pre style="margin-top: 0.25rem; margin-bottom: 0.5rem;"><code class="language-bash">curl http://localhost:11434/api/generate -d '{
+  "model": "qwen2.5-coder:7b",
+  "prompt": "Tu prompt largo aquí...",
+  "options": {
+    "num_ctx": 65536
+  }
+}'</code></pre>
+
+          <h4 style="margin-top: 1.25rem; margin-bottom: 0.5rem;">Opción 4: Interactivo (sesión temporal)</h4>
+          <pre style="margin-top: 0.25rem; margin-bottom: 0.5rem;"><code class="language-bash">ollama run qwen2.5-coder:7b
+# Dentro de la sesión:
+/set parameter num_ctx 65536</code></pre>
+
+          <h4 style="margin-top: 1.25rem; margin-bottom: 0.5rem;">Concurrencia y modelos paralelos</h4>
+          <pre style="margin-top: 0.25rem; margin-bottom: 0.5rem;"><code class="language-bash"># Variables de entorno adicionales para concurrencia:
+OLLAMA_NUM_PARALLEL=4     # Solicitudes paralelas por modelo (default: 1)
+OLLAMA_MAX_LOADED_MODELS=2 # Modelos simultáneos en memoria
+
+# macOS (LaunchAgents):
+# &lt;key&gt;OLLAMA_NUM_PARALLEL&lt;/key&gt;&lt;string&gt;4&lt;/string&gt;
+# &lt;key&gt;OLLAMA_MAX_LOADED_MODELS&lt;/key&gt;&lt;string&gt;2&lt;/string&gt;
+
+# Linux (systemd):
+# Environment="OLLAMA_NUM_PARALLEL=4"
+# Environment="OLLAMA_MAX_LOADED_MODELS=2"</code></pre>
+
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem; margin-bottom: 0;">
+            <a href="https://docs.ollama.com/context-length" target="_blank">Documentación Oficial de Context Length</a> · 
+            <a href="https://docs.ollama.com/modelfile" target="_blank">Referencia de Modelfile</a>
+          </p>
+        </div>
+      </section>
+
+      <!-- ============= 3 ============= -->
+      <section id="lmstudio-section">
+        <h2 id="lmstudio">3. LM Studio — Interfaz robusta para GGUF</h2>
+        <p><a href="https://lmstudio.ai" target="_blank" rel="noopener">LM Studio</a> proporciona una interfaz gráfica potente y modular para descargar, probar y configurar archivos en formato GGUF procedentes de Hugging Face de forma visual y directa.</p>
+        
+        <ol>
+          <li>Descarga el instalador nativo según tu plataforma en <code>lmstudio.ai</code>.</li>
+          <li>Navega a la pestaña de <strong>Búsqueda</strong> para encontrar repositorios públicos en segundos (ej: <code>llama-3.1-8b-instruct</code>, <code>qwen2.5-coder-7b</code>).</li>
+          <li>Descarga la cuantización GGUF que se ajuste a tu VRAM (recomendado <strong>Q4_K_M</strong> o <strong>Q5_K_M</strong>).</li>
+          <li>Navega al servidor local en la barra lateral izquierda, asocia el modelo descargado y haz clic en <strong>Start Server</strong>.</li>
+          <li>Esto iniciará una API compatible con OpenAI en <code>http://localhost:1234/v1</code>.</li>
+        </ol>
+
+        <!-- LM Studio GUI / CLI callout -->
+        <div class="card blue">
+          <span class="badge">TIP DE POWERUSER</span>
+          <strong style="display: block; margin-bottom: 0.5rem; color: var(--text-primary);">Uso de LM Studio por CLI (`lms`)</strong>
+          <p>LM Studio incluye un binario de terminal llamado <code>lms</code>. Úsalo para automatizar el ciclo de arrancar el servidor y cargar modelos programáticamente:</p>
+          <pre style="margin-bottom: 0.5rem;"><code class="language-bash"># Instalar las herramientas CLI de LM Studio en el PATH
+# Ejecutar en la app del sistema o usar este wrapper:
+lms bootstrap
+
+# Arrancar el servidor compatible con OpenAI vía terminal
+lms server start --port 1234
+
+# Cargar un modelo GGUF descargado directamente en memoria
+lms load "lmstudio-community/qwen2.5-coder-7b-instruct-GGUF" --context-length 64000
+
+# Ver qué modelos están listos para inferencia
+lms status</code></pre>
+        </div>
+      </section>
+
+      <!-- ============= 4 ============= -->
+      <section id="opencode-section">
+        <h2 id="opencode">4. OpenCode — El agente de código provider-agnóstico</h2>
+        <p><a href="https://opencode.ai" target="_blank" rel="noopener">OpenCode</a> es un agente de codificación open-source y modular que opera directamente sobre la terminal (TUI) y se acopla a cualquier pasarela local o API externa compatible con OpenAI.</p>
+        
+        <h3>Instalación global</h3>
+        <pre><code class="language-bash"># Instalación limpia vía Node Package Manager (NPM)
+npm install -g @opencode-ai/cli</code></pre>
+        
+        <h3>Configurar para trabajar con Ollama</h3>
+        <p>Inicia el agente apuntando directamente al puerto local donde Ollama corre sus servicios:</p>
+        <pre><code class="language-bash">opencode --provider ollama --model qwen2.5-coder:7b</code></pre>
+
+        <h3>Configurar para trabajar con LM Studio</h3>
+        <p>Apunta el agente a la API compatible levantada por LM Studio:</p>
+        <pre><code class="language-bash">opencode --provider openai --base-url http://localhost:1234/v1 --model qwen2.5-coder-7b-instruct</code></pre>
+      </section>
+
+      <!-- ============= 5 ============= -->
+      <section id="hermes-section">
+        <h2 id="hermes">5. Hermes Agent — El runtime autónomo que se automejora</h2>
+        <p><a href="https://github.com/NousResearch/hermes-agent" target="_blank" rel="noopener">Hermes Agent</a> es un runtime de IA autónomo (patrocinado por <strong>Nous Research</strong>) con licencia MIT. No es un simple copiloto o envoltorio de chat: se trata de un <strong>núcleo persistente</strong> con memoria SQLite + FTS5 nativa, arquitectura cron incorporada y creación automática de habilidades.</p>
+
+        <div class="card">
+          <strong style="display: block; margin-bottom: 0.75rem; color: var(--text-primary); font-size: 1.15rem;">¿Qué marca la diferencia en Hermes?</strong>
+          <ul style="margin-left: 1.25rem;">
+            <li><strong>Persistencia de Memoria:</strong> No empieza de cero cada vez. Utiliza bases de datos SQLite + FTS5 y embeddings locales/remotos para almacenar, refinar y recordar las preferencias operativas del usuario y el historial inter-sesión.</li>
+            <li><strong>Auto-generación de Skills:</strong> Cuando solventa una tarea compleja o de múltiples pasos (5+ tool calls), genera un script estructurado en <code>~/.hermes/skills/</code>. El subsistema Curador re-evalúa y limpia estas habilidades recursivamente.</li>
+            <li><strong>Gateway Multicanal:</strong> Un único daemon levanta una red multi-plataforma que conecta a tu agente local con Telegram, Discord, Slack, WhatsApp u otras 15+ pasarelas simultáneamente de forma transparente.</li>
+            <li><strong>Gestión de Subagentes:</strong> Permite delegación nativa y concurrente (<code>delegate_task</code>) lanzando múltiples subprocesos aislados para depurar o investigar en paralelo.</li>
+          </ul>
+        </div>
+
+        <h3>Instalación estructurada</h3>
+        <pre><code class="language-bash"># Descarga e instalador automatizado para macOS y Linux
+curl -fsSL https://hermes-agent.org/install.sh | sh
+
+# En entornos aislados de Python (macOS) - usando pip o uv
+python3 -m venv ~/.hermes/venv
+source ~/.hermes/venv/bin/activate
+pip install -U hermes-agent
+
+# Asistente guiado de configuración inicial
+hermes setup
+
+# Inicializar y depurar salud del sistema
+hermes doctor</code></pre>
+
+        <!-- Hermes YAML Config -->
+        <div class="card green">
+          <span class="badge">NATIVO</span>
+          <strong style="display: block; margin-bottom: 1rem; color: var(--text-primary);">Configuración Local de `~/.hermes/config.yaml`</strong>
+          <p>Para asegurar que Hermes conecte adecuadamente con tu motor local sin exigir recursos cloud o fallar revisiones de la API, edita tu archivo de configuración especificando la URL del servicio local:</p>
+          <pre style="margin-bottom: 0.5rem;"><code class="language-yaml"># Conexión local a Ollama en ~/.hermes/config.yaml
+model:
+  default: qwen2.5-coder:14b  # Reemplazar con tu modelo descargado
+  context_length: 64000       # Indicar el contexto explícitamente
+  base_url: http://localhost:11434/v1
+  provider: openai            # Usar envoltorio estándar OpenAI
+
+# O LM Studio de forma predeterminada:
+# model:
+#   default: qwen2.5-coder-7b-instruct
+#   context_length: 64000
+#   base_url: http://localhost:1234/v1
+#   provider: openai</code></pre>
+        </div>
+      </section>
+
+      <!-- ============= 6 ============= -->
+      <section id="opencode-local-section">
+        <h2 id="opencode-local">6. Cómo operar OpenCode de forma Headless</h2>
+        <p>OpenCode brilla en su interfaz de terminal integrada (TUI), pero además soporta automatizaciones a bajo nivel en segundo plano útiles para pipelines de integración continua o llamadas asíncronas.</p>
+
+        <h3>Ejecución headless para refactorización de lógica</h3>
+        <pre><code class="language-bash"># Ejecutar comandos directamente sin ingresar a la interfaz interactiva
+opencode run -p "Parce, refactoriza este index.js para que use async/await limpios" \
+  --provider ollama --model qwen2.5-coder:7b
+
+# Auditoría de seguridad local
+opencode run -p "Haz una auditoría de dependencias y vulnerabilidades en package.json" \
+  --provider openai --base-url http://localhost:11434/v1 --model llama3.1:8b</code></pre>
+      </section>
+
+      <!-- ============= 7 ============= -->
+      <section id="hermes-benefits-section">
+        <h2 id="hermes-benefits">7. Fuerza Operativa de Hermes frente a la Competencia</h2>
+        <p>A diferencia de frameworks monolíticos de chat o extensiones de IDEs que carecen de contexto sobre las sesiones pasadas, Hermes Agent consolida un entorno de control persistente:</p>
+
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Capacidad</th>
+                <th>Chatbots Convencionales</th>
+                <th>Copilotos en Editor</th>
+                <th>Hermes Agent Runtime</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Memoria a Largo Plazo</strong></td>
+                <td>Ninguna (Reset total de sesión)</td>
+                <td>Parcial (Sesión actual)</td>
+                <td><strong>SQLite + Indexado FTS5 + Embeddings</strong></td>
+              </tr>
+              <tr>
+                <td><strong>Habilidades Propias</strong></td>
+                <td>Estáticas de la plataforma</td>
+                <td>Limitadas a la extensión</td>
+                <td><strong>Auto-generación de skills en JS/Python</strong></td>
+              </tr>
+              <tr>
+                <td><strong>Ejecución Programada</strong></td>
+                <td>No soportado</td>
+                <td>No soportado</td>
+                <td><strong>Planificador de tareas cron nativo</strong></td>
+              </tr>
+              <tr>
+                <td><strong>Canales de Entrada</strong></td>
+                <td>Solo Web/App propietaria</td>
+                <td>Solo Ventana del IDE</td>
+                <td><strong>Gateway para 22+ plataformas de mensajería</strong></td>
+              </tr>
+              <tr>
+                <td><strong>Costo por Inferencia</strong></td>
+                <td>Suscripción / Pago por Token</td>
+                <td>Licencias de pago mensuales</td>
+                <td><strong>$0.00 corriendo en Ollama/LM Studio local</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ============= 8 ============= -->
+      <section id="gateway-section">
+        <h2 id="gateway">8. El Gateway de Hermes — Tu agente en todas partes</h2>
+        <p>El modulo <strong>Gateway</strong> es un puente de comunicación unificado que de forma reactiva asocia cualquier sistema de chat con el runtime local. Esto permite interactuar con el mismo agente que corre en la GPU del ordenador directamente desde tu teléfono móvil.</p>
+
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Plataforma</th>
+                <th>Propósito Típico</th>
+                <th>Beneficio Destacado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Terminal (CLI)</strong></td>
+                <td>Gestión de sistemas, codificación ágil</td>
+                <td>Acceso directo al kernel y shell del sistema</td>
+              </tr>
+              <tr>
+                <td><strong>Telegram</strong></td>
+                <td>Control móvil, consultas rápidas</td>
+                <td>Soporta notas de voz transcritas con Whisper local</td>
+              </tr>
+              <tr>
+                <td><strong>Slack / Discord</strong></td>
+                <td>Canal corporativo y de comunidades</td>
+                <td>Permite resolver bugs en equipo in-situ</td>
+              </tr>
+              <tr>
+                <td><strong>WhatsApp / Signal</strong></td>
+                <td>Acceso seguro libre de apps adicionales</td>
+                <td>Ecosistema de alta confidencialidad</td>
+              </tr>
+              <tr>
+                <td><strong>Email (SMTP)</strong></td>
+                <td>Reportería asíncrona avanzada</td>
+                <td>Despacha PDFs e informes elaborados de forma autónoma</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <pre><code class="language-bash"># Configurar tus credenciales de mensajería (Telegram, Slack, etc.)
+hermes gateway setup
+
+# Poner en marcha el Gateway en segundo plano
+hermes gateway run</code></pre>
+
+        <div class="card">
+          <h3>Correr 24/7 sin gastar — Oracle Free Tier o VPS barato</h3>
+          <p>El gateway de Hermes es liviano y corre sin GPU. Puedes dejarlo corriendo <strong>24/7 completamente gratis</strong> en la capa gratuita de Oracle Cloud (VM.Standard.ARM.A1 — 4 OCPUs, 24 GB RAM) o en cualquier VPS de ~$5/mes (Hetzner, Netcup, RackNerd). El agente pesado (LLM) corre en tu máquina local con GPU; el gateway en la VPS recibe los mensajes de Telegram/WhatsApp y se comunica con tu agente local via API.</p>
+
+          <pre><code class="language-bash"># 1. Instalar Hermes en la VPS
+curl -fsSL https://hermes-agent.org/install.sh | sh
+
+# 2. Configurar solo el gateway (sin modelo local)
+hermes gateway setup   # Telegram, WhatsApp, etc.
+
+# 3. Iniciar el gateway
+hermes gateway run
+
+# 4. (Opcional) Como servicio systemd para que arranque solo
+sudo tee /etc/systemd/system/hermes-gateway.service &lt;&lt;EOF
+[Unit]
+Description=Hermes Gateway
+After=network.target
+
+[Service]
+Type=simple
+User=tu-usuario
+ExecStart=$(which hermes) gateway run
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+sudo systemctl daemon-reload
+sudo systemctl enable --now hermes-gateway</code></pre>
+
+          <p style="margin-top: .75rem;">
+            <strong>Oracle Free Tier:</strong> <a href="https://www.oracle.com/cloud/free/" style="color:#a3e635;">oracle.com/cloud/free</a> — VM.ARM.A1 siempre gratis (4 cores, 24GB).<br>
+            <strong>Alternativas baratas:</strong> Hetzner (<a href="https://hetzner.com" style="color:#a3e635;">hetzner.com</a>) desde ~3.5€/mes, Netcup desde ~2€/mes.
+          </p>
+        </div>
+      </section>
+
+      <!-- ============= 9 ============= -->
+      <section id="credential-pools-section">
+        <h2 id="credential-pools">9. Credential Pools — Rotación inteligente de Claves</h2>
+        <p>Cuando un flujo local requiere alternar con pasarelas comerciales (OpenRouter, Anthropic o OpenAI), Hermes previene caídas de servicio por expiración de cuota o límites de concurrencia mediante un <strong>pool inteligente de rotación</strong>.</p>
+
+        <div class="card purple">
+          <strong style="display: block; margin-bottom: 0.75rem; color: var(--text-primary);">Estrategias de Rotación del Pool</strong>
+          <p>Puedes configurar el orden y la lógica de transición según tu volumen de desarrollo:</p>
+          <ul style="margin-left: 1.25rem; margin-bottom: 1rem;">
+            <li><strong><code>fill_first</code>:</strong> Exprime la primera clave registrada hasta saturarla antes de saltar a la siguiente.</li>
+            <li><strong><code>round_robin</code>:</strong> Distribución balanceada alternando equitativamente en cada token.</li>
+            <li><strong><code>least_used</code>:</strong> Prioriza las llaves con menor consumo histórico.</li>
+          </ul>
+        </div>
+
+        <pre><code class="language-bash"># Listar claves asociadas y cooldowns activos
+hermes auth list
+
+# Agregar una clave secundaria para OpenRouter
+hermes auth add openrouter --api-key sk-or-...-your-key-2
+
+# Reiniciar y limpiar bloqueos transitorios en el pool
+hermes auth reset openrouter</code></pre>
+      </section>
+
+      <!-- ============= 10 ============= -->
+      <section id="cron-section">
+        <h2 id="cron">10. Automatización Extrema con Cron e Inteligencia en Local</h2>
+        <p>La combinación de un programador interno con un modelo local erradica las cuotas operativas. Puedes planificar tareas concurrentes que examinen bases de datos, mantengan repositorios o alerten sobre logs de forma perpetua.</p>
+
+        <pre><code class="language-bash"># Programar tareas rutinarias en lenguaje natural
+hermes cron add "Cada 30 minutos revisa estado del repo /paletas y si hay cambios sin commit, haz pull nocturno"
+
+# Buscar noticias técnicas con tu modelo local sin costo de Tokens
+hermes cron add "Cada mañana a las 7 AM escrapea novedades sobre LLMs, haz un resumen y envíalo por Telegram"
+
+# Listar las tareas de automatización activas
+hermes cron list</code></pre>
+
+        <!-- ROI Card -->
+        <div class="card green">
+          <span class="badge">RETORNO DE INVERSIÓN (ROI)</span>
+          <strong style="display: block; margin-bottom: 0.75rem; color: var(--text-primary);">¿Mac Mini o PC con GPU? El cálculo es simple</strong>
+
+          <p style="margin-bottom: 1rem;">
+            Con solo <strong>cancelar una suscripción de IA cloud</strong> (Claude Pro o Google One AI Pro, ~$25/mes promedio) 
+            más <strong>OpenCode Go ($5/mes)</strong>, liberas <strong>$30/mes</strong> que puedes reinvertir en tu propio hardware local.
+          </p>
+
+          <div class="table-container" style="margin-top: 1rem; margin-bottom: 0.5rem;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Suscripción Cloud</th>
+                  <th>Costo Mensual</th>
+                  <th>Reemplazo Local</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Claude Pro <em>o</em> Google One AI Pro</td>
+                  <td>~ $ 25.00 USD</td>
+                  <td><strong>$ 0.00</strong></td>
+                </tr>
+                <tr>
+                  <td>OpenCode Go</td>
+                  <td>$ 5.00 USD</td>
+                  <td><strong>$ 0.00</strong></td>
+                </tr>
+                <tr>
+                  <td><strong>Ahorro Total Mensual</strong></td>
+                  <td><strong>$ 30.00 USD/mes</strong></td>
+                  <td><strong>$ 30.00 USD/mes</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div style="margin-top: 1.25rem; padding: 1rem; background: var(--bg-tertiary); border-radius: 8px; border: 1px solid var(--border-color);">
+            <strong style="color: var(--text-primary); display: block; margin-bottom: 0.75rem;">Amortización según el hardware que elijas</strong>
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.88rem;">
+              <thead>
+                <tr>
+                  <th style="padding: 0.4rem 0.6rem; border-bottom: 2px solid var(--border-color); text-align: left; color: var(--text-primary); font-weight: 600;">Hardware</th>
+                  <th style="padding: 0.4rem 0.6rem; border-bottom: 2px solid var(--border-color); text-align: right; color: var(--text-primary); font-weight: 600;">Precio Estimado</th>
+                  <th style="padding: 0.4rem 0.6rem; border-bottom: 2px solid var(--border-color); text-align: right; color: var(--accent-color); font-weight: 600;">Amortización</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="padding: 0.4rem 0.6rem; border-bottom: 1px solid var(--border-color); color: var(--text-secondary);">Mac Mini M4 (16GB/256GB)</td>
+                  <td style="padding: 0.4rem 0.6rem; border-bottom: 1px solid var(--border-color); text-align: right; font-weight: 600; color: var(--text-primary);">$ 599 USD</td>
+                  <td style="padding: 0.4rem 0.6rem; border-bottom: 1px solid var(--border-color); text-align: right; font-weight: 700; color: var(--accent-secondary);">~ 20 meses</td>
+                </tr>
+                <tr>
+                  <td style="padding: 0.4rem 0.6rem; border-bottom: 1px solid var(--border-color); color: var(--text-secondary);">Mac Mini M4 (16GB/512GB)</td>
+                  <td style="padding: 0.4rem 0.6rem; border-bottom: 1px solid var(--border-color); text-align: right; font-weight: 600; color: var(--text-primary);">$ 799 USD</td>
+                  <td style="padding: 0.4rem 0.6rem; border-bottom: 1px solid var(--border-color); text-align: right; font-weight: 700; color: var(--accent-secondary);">~ 27 meses</td>
+                </tr>
+                <tr>
+                  <td style="padding: 0.4rem 0.6rem; border-bottom: none; color: var(--text-secondary);">PC RTX 3060 + Ryzen 5 + 16GB DDR5</td>
+                  <td style="padding: 0.4rem 0.6rem; border-bottom: none; text-align: right; font-weight: 600; color: var(--text-primary);">~ $ 900 USD</td>
+                  <td style="padding: 0.4rem 0.6rem; border-bottom: none; text-align: right; font-weight: 700; color: var(--accent-secondary);">~ 30 meses</td>
+                </tr>
+              </tbody>
+            </table>
+            <p style="margin-top: 0.75rem; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0;">
+              La Mac Mini se amortiza más rápido por ser más barata. La PC con RTX 3060 te da más VRAM (12GB) y 
+              corre modelos más grandes sin swap, ideal para GGUF cuantizados. En oferta, la Mac Mini baja a $499 
+              (~17 meses) y la PC con piezas usadas ronda los $700 (~24 meses). 
+              Ambos casos: después de la amortización, el hardware es tuyo y sigues ahorrando $30/mes.
+            </p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- ==========================================
+       FOOTER
+       ========================================= -->
+  <footer>
+    <p>La Alquimia &mdash; Local AI &mdash; Guía de Desarrollo Profesional &mdash; Julio 2026</p>
+  </footer>
+
+  <!-- ==========================================
+       COMPORTAMIENTOS JAVASCRIPT (FRONTEND)
+       ========================================= -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      
+      // 1. CONTROL DE TEMA (DARK / LIGHT TOGGLE)
+      const themeToggle = document.getElementById('theme-toggle');
+      const currentTheme = localStorage.getItem('theme') || 'dark';
+      
+      document.documentElement.setAttribute('data-theme', currentTheme);
+      
+      themeToggle.addEventListener('click', () => {
+        let theme = document.documentElement.getAttribute('data-theme');
+        let newTheme = theme === 'dark' ? 'light' : 'dark';
+        
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+      });
+
+      // 2. INCORPORAR BOTONES DE COPIAR EN PRE BLOCKS
+      const preBlocks = document.querySelectorAll('pre');
+      preBlocks.forEach((block) => {
+        // Ignorar aquellos que tengan estilos especiales o no sean código técnico
+        if (block.querySelector('code')) {
+          const button = document.createElement('button');
+          button.className = 'copy-button';
+          button.innerHTML = `
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+            <span>Copiar</span>
+          `;
+          
+          block.appendChild(button);
+          
+          button.addEventListener('click', () => {
+            const codeText = block.querySelector('code').innerText;
+            navigator.clipboard.writeText(codeText).then(() => {
+              button.classList.add('copied');
+              button.querySelector('span').innerText = 'Copiado';
+              
+              setTimeout(() => {
+                button.classList.remove('copied');
+                button.querySelector('span').innerText = 'Copiar';
+              }, 2000);
+            });
+          });
+        }
+      });
+
+      // 3. BUSCADOR INTEGRADO (FILTRO DINÁMICO EN SIDEBAR Y TEXTO)
+      const searchInput = document.getElementById('search-input');
+      const sidebarLinks = document.querySelectorAll('.sidebar-link');
+      const sections = document.querySelectorAll('main section');
+
+      searchInput.addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase().trim();
+        
+        sidebarLinks.forEach(link => {
+          const text = link.innerText.toLowerCase();
+          if (text.includes(query)) {
+            link.style.display = 'block';
+          } else {
+            link.style.display = 'none';
+          }
+        });
+
+        // Highlight visual básico o filtrado rápido de secciones
+        sections.forEach(section => {
+          const textContent = section.innerText.toLowerCase();
+          if (query === '') {
+            section.style.opacity = '1';
+          } else if (textContent.includes(query)) {
+            section.style.opacity = '1';
+          } else {
+            section.style.opacity = '0.35'; // Atenuar secciones no coincidentes
+          }
+        });
+      });
+
+      // 4. SCROLLSPY (INDICADOR DE SECCIÓN ACTIVA EN SIDEBAR)
+      const observerOptions = {
+        root: null,
+        rootMargin: '-20% 0px -60% 0px',
+        threshold: 0
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = entry.target.id;
+            // Remover activo previo
+            document.querySelectorAll('.sidebar-link').forEach(link => {
+              link.classList.remove('active');
+            });
+            // Buscar enlace activo
+            const activeLink = document.querySelector(`.sidebar-link[href="#${id.replace('-section', '')}"]`);
+            if (activeLink) {
+              activeLink.classList.add('active');
+            }
+          }
+        });
+      }, observerOptions);
+
+      sections.forEach(section => {
+        observer.observe(section);
+      });
+
+      // 5. MENÚ MÓVIL (TOGGLE + OVERLAY)
+      const menuToggle = document.getElementById('menu-toggle');
+      const sidebar = document.getElementById('sidebar');
+      let overlay;
+
+      function createOverlay() {
+        overlay = document.createElement('div');
+        overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:80;opacity:0;transition:opacity 0.3s ease;pointer-events:none;';
+        document.body.appendChild(overlay);
+
+        overlay.addEventListener('click', (e) => {
+          e.stopPropagation();
+          closeSidebar();
+        });
+
+        overlay.addEventListener('touchmove', (e) => {
+          e.preventDefault();
+        }, { passive: false });
+      }
+
+      function openSidebar() {
+        if (!overlay) createOverlay();
+        sidebar.classList.add('open');
+        overlay.style.pointerEvents = 'auto';
+        requestAnimationFrame(() => { overlay.style.opacity = '1'; });
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeSidebar() {
+        sidebar.classList.remove('open');
+        if (overlay) {
+          overlay.style.opacity = '0';
+          overlay.style.pointerEvents = 'none';
+        }
+        document.body.style.overflow = '';
+      }
+
+      menuToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (sidebar.classList.contains('open')) {
+          closeSidebar();
+        } else {
+          openSidebar();
+        }
+      });
+
+      // Cerrar sidebar al hacer clic en un enlace (móvil)
+      sidebar.querySelectorAll('.sidebar-link').forEach(link => {
+        link.addEventListener('click', () => {
+          if (window.innerWidth < 1024) closeSidebar();
+        });
+      });
+
+      // Cerrar con Escape
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+          closeSidebar();
+        }
+      });
+
+    });
+  </script>
+</body>
+</html>
