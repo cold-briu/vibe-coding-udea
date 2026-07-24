@@ -1,6 +1,18 @@
 # Bitácora
 
 Registro de sesiones del semillero.
+
+## Sesión 9: 2026-07-22
+
+- **IA Local y Automatización (Presentación de La Alquimia)**
+  - **Introducción e Independencia Tecnológica:** La Alquimia (estudiante de Economía de la UdeA) comparte su experiencia en automatización y domótica, destacando las ventajas de ejecutar modelos de IA locales para reducir costos, mejorar la eficiencia y mantener la privacidad de los datos frente a servicios en la nube.
+  - **Plataformas de Ejecución Local:** Demostración práctica de Ollama (línea de comandos) y LM Studio (interfaz gráfica que funciona como wrapper de Ollama). Explicación sobre la instalación y carga de modelos (como Gemma 12B), señalando cómo la RAM y el hardware (NPU vs. GPU) condicionan la velocidad (tokens/seg) y la capacidad de razonamiento.
+  - **Rendimiento, Benchmarks y Ventana de Contexto:** Generación en vivo de código Python. Discusión sobre el impacto de la ventana de contexto (*context window*) en el uso de RAM al procesar conversaciones extensas o múltiples archivos, y comparativa de costos de hardware (M3, M5, NVIDIA 3060).
+  - **Integración del Flujo de Trabajo con OpenCode:** Uso de OpenCode para conectar el editor de código con el modelo local vía API, permitiendo desarrollar proyectos (como páginas web) de forma fluida sin copiar código manualmente.
+  - **Agentes Autónomos y Control Remoto con Hermes Agent:** Presentación de Hermes Agent, agente con memoria KV (*Key-Value*) para navegación web, lectura de archivos y ejecución de tareas programadas (reportes). Se mostró su control remoto y envío de notificaciones mediante una pasarela integrada con Telegram.
+  - **Infraestructura Híbrida y Economía de Tokens:** Configuración de la capa gratuita de Oracle Cloud (24 GB RAM, 4 vCPU) para modelos livianos (como Bonsai) y estrategia para evitar *rate limits* rotando claves en OpenRouter. La Alquimia destacó que su gasto anual en tokens fue de solo $22 USD.
+  - **Siguientes Pasos:** La Alquimia realizará un *pull request* en el repositorio con los enlaces y recursos presentados (Hermes Agent, OpenRouter, Oracle Cloud).
+
 ## Sesión 8: 2026-07-15
 
 - Nueva ronda de presentaciones por la llegada de Zurley
