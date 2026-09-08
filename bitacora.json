@@ -1,5 +1,44 @@
-{
-  "Sesión 9: 2026-07-22": {
+[
+  {
+    "session": 10,
+    "date": "2026-09-02",
+    "title": "Instalando open claw y conectando con telegram",
+    "video": "https://youtu.be/EA-TFWZeCN4",
+    "items": [
+      [
+        "**Instalación y Prerrequisitos (Presentación de Andrés)**",
+        [
+          "**Entorno Local:** Demostración de instalación de Open Claw en Linux local mediante WSL, priorizando configuraciones de seguridad y evitando incompatibilidades de drivers en hardware tipo Jetson.",
+          "**Gestión de Dependencias:** Uso de NVM (Node Version Manager) y curl para aislar entornos y versiones de Node.js, evitando conflictos con paquetes del sistema."
+        ]
+      ],
+      [
+        "**Configuración de Seguridad y Control con Telegram**",
+        [
+          "**Restricciones de Acceso:** Configuración de parámetros de seguridad e integración del modelo Gemini, restringiendo la ejecución de acciones únicamente al usuario autorizado.",
+          "**Canal de Control Remoto:** Vinculación con Telegram usando BotFather para comandar el agente a distancia de forma segura."
+        ]
+      ],
+      [
+        "**Capacidades Autónomas y Gestión de Código**",
+        [
+          "**Navegación y Sistema de Archivos:** Pruebas en vivo de búsqueda web en tiempo real, lectura/escritura de archivos y automatización local.",
+          "**Operaciones en Repositorios:** Clonación y análisis de proyectos de código, identificando los requisitos de credenciales para publicar cambios en GitHub."
+        ]
+      ],
+      [
+        "**Siguientes Pasos**",
+        [
+          "Entrega de la tarjeta Jetson a la sala financiera y revocación de permisos/tokens de prueba en GitHub.",
+          "Organización de grabaciones para el semillero y desarrollo de un sitio en GitHub Pages para alojar los recursos del equipo."
+        ]
+      ]
+    ]
+  },
+  {
+    "session": 9,
+    "date": "2026-07-22",
+    "title": "IA Local y Automatización con Ollama",
     "video": null,
     "items": [
       [
@@ -16,7 +55,10 @@
       ]
     ]
   },
-  "Sesión 8: 2026-07-15": {
+  {
+    "session": 8,
+    "date": "2026-07-15",
+    "title": "Medebooks, Agent As a Service y Sostenibilidad",
     "video": null,
     "items": [
       "Nueva ronda de presentaciones por la llegada de Zurley",
@@ -47,7 +89,10 @@
       "La Alquimia comparte un link de referido para google ai pro de 4 meses gratis."
     ]
   },
-  "Sesión 7: 2026-06-10": {
+  {
+    "session": 7,
+    "date": "2026-06-10",
+    "title": "Conceptos de Agentes y RASA NLP",
     "video": null,
     "items": [
       "Juan David presenta las diferencias conceptuales entre MCP, Skills y Roles.",
@@ -68,7 +113,10 @@
       "Edison propone la posibilidad de participar en el [Gemini X Prize](https://www.geminixprize.com) y lanza la pregunta al grupo."
     ]
   },
-  "Sesión 6: 2026-05-27": {
+  {
+    "session": 6,
+    "date": "2026-05-27",
+    "title": "Arquitectura RAG y FlowiseAI",
     "video": null,
     "items": [
       [
@@ -124,7 +172,10 @@
       ]
     ]
   },
-  "Sesión 5: 2026-05-20": {
+  {
+    "session": 5,
+    "date": "2026-05-20",
+    "title": "Spec-Driven Development y Taxonomía de Agentes",
     "video": null,
     "items": [
       [
@@ -169,7 +220,10 @@
       ]
     ]
   },
-  "Sesión 4: 2026-05-13": {
+  {
+    "session": 4,
+    "date": "2026-05-13",
+    "title": "Agentic Frameworks y Programación Creativa",
     "video": null,
     "items": [
       "Hablamos sobre google dev exper talk, agentic flutter y angular. Aula 21 - 326 ingeniera 20 junio 10 am a 2 pm",
@@ -177,7 +231,10 @@
       "Sandusky expone su flujo de trabajo creando el curso de programacion creativa : artilugiotaller.com"
     ]
   },
-  "Sesión 3: 2026-05-06": {
+  {
+    "session": 3,
+    "date": "2026-05-06",
+    "title": "Prototipado y SDD en la Industria",
     "video": null,
     "items": [
       "Merge del PR de Dani donde explica el flujo de trabajo para la creación de material de estudio.",
@@ -202,7 +259,10 @@
       "Pendiente: Coordinar taller de google dev experts sobre creacion de agentes con gemini."
     ]
   },
-  "Sesión 2: 2026-04-29": {
+  {
+    "session": 2,
+    "date": "2026-04-29",
+    "title": "Flujos de Estudio y Orquestación",
     "video": null,
     "items": [
       "Andrés Presenta brevemente el programa de google dev community : https://developers.google.com/community/build-with-ai y sugire la posibildiad de organizar una meetup en la universidad.",
@@ -211,7 +271,10 @@
       "Daniel dice que le gustarpia crear flujos de trabajo mas elaborados y que no sea simplemente enviar prompts."
     ]
   },
-  "Sesión 1: 2026-04-22": {
+  {
+    "session": 1,
+    "date": "2026-04-22",
+    "title": "Introducción y Acuerdos de Trabajo",
     "video": null,
     "items": [
       "Introducción al programa.",
@@ -220,4 +283,4 @@
       "Propuesta de trabajo: Estructura de carpetas individuales en `proyectos/`."
     ]
   }
-}
+]

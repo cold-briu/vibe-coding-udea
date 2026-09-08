@@ -46,6 +46,21 @@
 
   <!-- Script to Render bitacora.json Cards -->
   <script>
+    function formatDate(dateStr) {
+      if (!dateStr || typeof dateStr !== 'string') return '';
+      const parts = dateStr.trim().split('-');
+      if (parts.length !== 3) return dateStr;
+      const year = parseInt(parts[0], 10);
+      const month = parseInt(parts[1], 10) - 1;
+      const day = parseInt(parts[2], 10);
+      if (isNaN(year) || isNaN(month) || isNaN(day)) return dateStr;
+      
+      const months = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+      const monthName = months[month];
+      
+      return `${monthName} ${day} de ${year}`;
+    }
+
     function parseMarkdown(str) {
       if (typeof str !== 'string') return '';
       return str
@@ -78,11 +93,27 @@
       const container = document.getElementById('cards-container');
       if (!container) return;
       
+      const sessions = Array.isArray(data)
+        ? data
+        : Object.entries(data).map(([key, val]) => ({
+            title: key,
+            video: val?.video || null,
+            items: val?.items || val
+          }));
+
       let html = '';
-      for (const [sessionTitle, sessionVal] of Object.entries(data)) {
-        const isObject = sessionVal && !Array.isArray(sessionVal) && typeof sessionVal === 'object';
-        const videoUrl = isObject ? sessionVal.video : null;
-        const sessionItems = isObject ? sessionVal.items : sessionVal;
+      for (const item of sessions) {
+        const sessionBadge = item.session
+          ? `<span class="inline-block px-2 py-0.5 text-xs font-semibold bg-blue-50 text-blue-600 border border-blue-200 rounded-none flex-shrink-0">Sesión ${item.session}</span>`
+          : '';
+
+        const dateSpan = item.date
+          ? `<span class="text-xs text-slate-500 font-normal flex-shrink-0">${formatDate(item.date)}</span>`
+          : '';
+
+        const titleText = item.title || item.rawTitle || item.headerTitle || '';
+        const videoUrl = item.video || null;
+        const sessionItems = item.items || [];
 
         const videoBtnHtml = videoUrl
           ? `<a href="${videoUrl}" target="_blank" rel="noopener" onclick="event.stopPropagation()" class="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold no-underline border border-blue-600 text-blue-600 bg-blue-50 hover:bg-blue-600 hover:text-white rounded-none whitespace-nowrap flex-shrink-0 transition-colors">Ver Video</a>`
@@ -91,11 +122,15 @@
         html += `
           <details class="group bg-white border border-slate-200 p-7 flex flex-col w-full rounded-none">
             <summary class="flex items-center justify-between gap-4 flex-shrink-0 cursor-pointer list-none select-none border-b border-transparent group-open:border-slate-200 group-open:pb-3 transition-all [&::-webkit-details-marker]:hidden">
-              <div class="flex items-center gap-3 min-w-0">
-                <svg class="w-4 h-4 text-slate-400 transition-transform duration-200 group-open:rotate-90 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path>
-                </svg>
-                <h3 class="text-xl font-bold text-slate-900 m-0 leading-snug truncate">${parseMarkdown(sessionTitle)}</h3>
+              <div class="flex flex-col gap-1.5 min-w-0">
+                <div class="flex items-center gap-2.5">
+                  <svg class="w-4 h-4 text-slate-400 transition-transform duration-200 group-open:rotate-90 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path>
+                  </svg>
+                  ${sessionBadge}
+                  ${dateSpan}
+                </div>
+                <h1 class="text-xl font-bold text-slate-900 m-0 leading-snug truncate pl-6 font-mono">${parseMarkdown(titleText)}</h1>
               </div>
               <div class="flex items-center gap-3 flex-shrink-0">
                 ${videoBtnHtml}

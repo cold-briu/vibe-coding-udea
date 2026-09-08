@@ -2,7 +2,22 @@
 
 Registro de sesiones del semillero.
 
-## Sesión 9: 2026-07-22
+## Sesión 10: 2026-09-02 — Instalando open claw y conectando con telegram
+
+- **Instalación y Prerrequisitos (Presentación de Andrés)**
+  - **Entorno Local:** Demostración de instalación de Open Claw en Linux local mediante WSL, priorizando configuraciones de seguridad y evitando incompatibilidades de drivers en hardware tipo Jetson.
+  - **Gestión de Dependencias:** Uso de NVM (Node Version Manager) y curl para aislar entornos y versiones de Node.js, evitando conflictos con paquetes del sistema.
+- **Configuración de Seguridad y Control con Telegram**
+  - **Restricciones de Acceso:** Configuración de parámetros de seguridad e integración del modelo Gemini, restringiendo la ejecución de acciones únicamente al usuario autorizado.
+  - **Canal de Control Remoto:** Vinculación con Telegram usando BotFather para comandar el agente a distancia de forma segura.
+- **Capacidades Autónomas y Gestión de Código**
+  - **Navegación y Sistema de Archivos:** Pruebas en vivo de búsqueda web en tiempo real, lectura/escritura de archivos y automatización local.
+  - **Operaciones en Repositorios:** Clonación y análisis de proyectos de código, identificando los requisitos de credenciales para publicar cambios en GitHub.
+- **Siguientes Pasos**
+  - Entrega de la tarjeta Jetson a la sala financiera y revocación de permisos/tokens de prueba en GitHub.
+  - Organización de grabaciones para el semillero y desarrollo de un sitio en GitHub Pages para alojar los recursos del equipo.
+
+## Sesión 9: 2026-07-22 — IA Local y Automatización con Ollama
 
 - **IA Local y Automatización (Presentación de La Alquimia)**
   - **Introducción e Independencia Tecnológica:** La Alquimia (estudiante de Economía de la UdeA) comparte su experiencia en automatización y domótica, destacando las ventajas de ejecutar modelos de IA locales para reducir costos, mejorar la eficiencia y mantener la privacidad de los datos frente a servicios en la nube.
@@ -13,7 +28,7 @@ Registro de sesiones del semillero.
   - **Infraestructura Híbrida y Economía de Tokens:** Configuración de la capa gratuita de Oracle Cloud (24 GB RAM, 4 vCPU) para modelos livianos (como Bonsai) y estrategia para evitar *rate limits* rotando claves en OpenRouter. La Alquimia destacó que su gasto anual en tokens fue de solo $22 USD.
   - **Siguientes Pasos:** La Alquimia realizará un *pull request* en el repositorio con los enlaces y recursos presentados (Hermes Agent, OpenRouter, Oracle Cloud).
 
-## Sesión 8: 2026-07-15
+## Sesión 8: 2026-07-15 — Medebooks, Agent As a Service y Sostenibilidad
 
 - Nueva ronda de presentaciones por la llegada de Zurley
 
@@ -49,7 +64,7 @@ Registro de sesiones del semillero.
 
 - La Alquimia comparte un link de referido para google ai pro de 4 meses gratis.
 
-## Sesión 7: 2026-06-10
+## Sesión 7: 2026-06-10 — Conceptos de Agentes y RASA NLP
 
 - Juan David presenta las diferencias conceptuales entre MCP, Skills y Roles.
 
@@ -70,7 +85,7 @@ Registro de sesiones del semillero.
 
 - Edison propone la posibilidad de participar en el [Gemini X Prize](https://www.geminixprize.com) y lanza la pregunta al grupo.
 
-## Sesión 6: 2026-05-27
+## Sesión 6: 2026-05-27 — Arquitectura RAG y FlowiseAI
 
 - **Introducción a RAG y Predicción de Tokens**
   - Explicación de la arquitectura RAG (Retrieval-Augmented Generation) como método para inyectar contexto externo a los modelos de lenguaje.
@@ -96,7 +111,7 @@ Registro de sesiones del semillero.
 - **Proyección Estratégica (Próximo Semestre)**
   - Propuesta del Profe Edison para introducir el uso básico de [n8n](https://n8n.io/) en el siguiente ciclo. Esto permitirá a los asistentes dominar la lógica de automatización tradicional y comprender mejor las ventajas y la potencia de herramientas nativas de IA como FlowiseAI.
 
-## Sesión 5: 2026-05-20
+## Sesión 5: 2026-05-20 — Spec-Driven Development y Taxonomía de Agentes
 
 - **Visión Estratégica (Próximo Semestre)**
   - Propuesta del Profe Edison para estructurar el Semillero como un grupo exclusivo por invitación.
@@ -119,7 +134,7 @@ Registro de sesiones del semillero.
   [ ] Evaluar el nuevo horario para las sesiones prácticas.
   [ ] Diseñar el entorno de pruebas para experimentar con las líneas de investigación planteadas.
 
-## Sesión 4: 2026-05-13
+## Sesión 4: 2026-05-13 — Agentic Frameworks y Programación Creativa
 
 - Hablamos sobre google dev exper talk, agentic flutter y angular. Aula 21 - 326 ingeniera 20 junio 10 am a 2 pm
 
@@ -127,7 +142,7 @@ Registro de sesiones del semillero.
 
 - Sandusky expone su flujo de trabajo creando el curso de programacion creativa : artilugiotaller.com
 
-## Sesión 3: 2026-05-06
+## Sesión 3: 2026-05-06 — Prototipado y SDD en la Industria
 
 - Merge del PR de Dani donde explica el flujo de trabajo para la creación de material de estudio.
 
@@ -158,7 +173,7 @@ Registro de sesiones del semillero.
 
 - Pendiente: Coordinar taller de google dev experts sobre creacion de agentes con gemini.
 
-## Sesión 2: 2026-04-29
+## Sesión 2: 2026-04-29 — Flujos de Estudio y Orquestación
 
 - Andrés Presenta brevemente el programa de google dev community : https://developers.google.com/community/build-with-ai y sugire la posibildiad de organizar una meetup en la universidad.
 
@@ -168,7 +183,7 @@ Registro de sesiones del semillero.
 
 - Daniel dice que le gustarpia crear flujos de trabajo mas elaborados y que no sea simplemente enviar prompts.
 
-## Sesión 1: 2026-04-22
+## Sesión 1: 2026-04-22 — Introducción y Acuerdos de Trabajo
 
 - Introducción al programa.
 - Presentación de asistentes.
