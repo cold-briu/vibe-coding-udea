@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Semillero Vibe Coding — Universidad de Antioquia</title>
+  <meta name="description" content="Semillero estudiantil de la Universidad de Antioquia enfocado en desarrollo asistido por IA: vibe coding, meta prompting, ingeniería de prompts y modelos locales." />
+
+  <!-- Google Fonts: JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN v3 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-slate-50 text-slate-900 font-mono min-h-screen flex flex-col antialiased">
+
+  <!-- LIST OF CARDS SECTION -->
+  <main class="w-full max-w-[1100px] mx-auto px-6 py-12 flex-grow" id="bitacora">
+    <div class="flex flex-col gap-7 w-full" id="cards-container">
+      <!-- Dynamically populated via JavaScript from bitacora.json -->
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-white py-7 mt-auto border-t border-slate-200">
+    <div class="w-full max-w-[1100px] mx-auto px-6 flex items-center justify-between text-xs text-slate-500 flex-wrap gap-4">
+      <p>&copy; 2026 Semillero Vibe Coding UdeA. <a href="LICENSE" target="_blank" rel="noopener" class="text-slate-600 underline hover:text-blue-600">Licencia MIT</a>.</p>
+      <div>
+        <a href="https://github.com/cold-briu/vibe-coding-udea" target="_blank" rel="noopener" class="text-slate-600 underline hover:text-blue-600">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script to Render bitacora.json Cards -->
+  <script>
+    function parseMarkdown(str) {
+      if (typeof str !== 'string') return '';
+      return str
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.*?)\*/g, '<em>$1</em>')
+        .replace(/`([^`]+)`/g, '<code class="bg-slate-100 px-1.5 py-0.5 text-[0.85em] text-slate-900 font-mono rounded-none">$1</code>')
+        .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener" class="text-blue-600 underline hover:text-blue-800">$1</a>');
+    }
+
+    function renderListItems(items, isNested = false) {
+      if (!Array.isArray(items) || items.length === 0) return '';
+      const listClasses = isNested
+        ? 'list-[circle] pl-4 mt-1.5 mb-1 flex flex-col gap-2'
+        : 'list-disc pl-5 flex flex-col gap-2 text-[0.925rem] text-slate-600 leading-relaxed';
+
+      let html = `<ul class="${listClasses}">`;
+      for (const item of items) {
+        if (typeof item === 'string') {
+          html += `<li>${parseMarkdown(item)}</li>`;
+        } else if (Array.isArray(item)) {
+          const [title, children] = item;
+          html += `<li>${parseMarkdown(title)}${renderListItems(children, true)}</li>`;
+        }
+      }
+      html += '</ul>';
+      return html;
+    }
+
+    function renderCards(data) {
+      const container = document.getElementById('cards-container');
+      if (!container) return;
+      
+      let html = '';
+      for (const [sessionTitle, sessionVal] of Object.entries(data)) {
+        const isObject = sessionVal && !Array.isArray(sessionVal) && typeof sessionVal === 'object';
+        const videoUrl = isObject ? sessionVal.video : null;
+        const sessionItems = isObject ? sessionVal.items : sessionVal;
+
+        const videoBtnHtml = videoUrl
+          ? `<a href="${videoUrl}" target="_blank" rel="noopener" onclick="event.stopPropagation()" class="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold no-underline border border-blue-600 text-blue-600 bg-blue-50 hover:bg-blue-600 hover:text-white rounded-none whitespace-nowrap flex-shrink-0 transition-colors">Ver Video</a>`
+          : `<span onclick="event.stopPropagation()" class="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold border border-slate-200 text-slate-400 bg-slate-100 opacity-60 cursor-not-allowed pointer-events-none rounded-none whitespace-nowrap flex-shrink-0">Sin Video</span>`;
+
+        html += `
+          <details class="group bg-white border border-slate-200 p-7 flex flex-col w-full rounded-none">
+            <summary class="flex items-center justify-between gap-4 flex-shrink-0 cursor-pointer list-none select-none border-b border-transparent group-open:border-slate-200 group-open:pb-3 transition-all [&::-webkit-details-marker]:hidden">
+              <div class="flex items-center gap-3 min-w-0">
+                <svg class="w-4 h-4 text-slate-400 transition-transform duration-200 group-open:rotate-90 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path>
+                </svg>
+                <h3 class="text-xl font-bold text-slate-900 m-0 leading-snug truncate">${parseMarkdown(sessionTitle)}</h3>
+              </div>
+              <div class="flex items-center gap-3 flex-shrink-0">
+                ${videoBtnHtml}
+              </div>
+            </summary>
+            <div class="pt-5">
+              ${renderListItems(sessionItems)}
+            </div>
+          </details>
+        `;
+      }
+      container.innerHTML = html;
+    }
+
+    // Fetch bitacora.json
+    fetch('bitacora.json')
+      .then(res => res.json())
+      .then(data => renderCards(data))
+      .catch(err => {
+        console.error('Error loading bitacora.json:', err);
+      });
+  </script>
+
+</body>
+</html>
