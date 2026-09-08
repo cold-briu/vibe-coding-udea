@@ -3,7 +3,7 @@
 Semillero estudiantil de la Universidad de Antioquia enfocado en desarrollo asistido por IA: vibe coding, meta prompting, ingeniería de prompts y modelos locales.
 
 ## Encuentros
-- **Ubicación:** Bloque 18-210 (LIS), Sala 4.
+- **Ubicación:** Bloque 19-206 “Laboratorio Financiero”
 - **Horario:** Miércoles, 12:30 – 13:30.
 
 ## Metodología
