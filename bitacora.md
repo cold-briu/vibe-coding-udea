@@ -2,6 +2,23 @@
 
 Registro de sesiones del semillero.
 
+## Sesión 11: 2026-09-09 — Innovación Digital e IA en el Sector de la Construcción
+
+- **Diagnóstico y Madurez Tecnológica (Presentación de Juan David)**
+  - **Hoja de Ruta para el Sector de la Construcción:** Juan David presenta la [hoja de ruta](https://camacol.co/productividad-sectorial/hoja-de-ruta) para la innovación digital en el sector de la construcción, basada en una investigación realizada junto a la Universidad de los Andes con 184 organizaciones, cuyos hallazgos fueron discutidos en Expocamacol. La propuesta consiste en abandonar el enfoque puramente teórico para formar equipos que combinen perfiles de consultoría y desarrollo con el fin de ofrecer servicios tecnológicos aplicables y concretos.
+  - **Análisis de Madurez del Sector:** El diagnóstico actual del sector sitúa su madurez tecnológica en un índice de 1.94 sobre 4, con el objetivo de alcanzar el arquetipo 4. Se destaca que la construcción contribuye con el 4.2% del Producto Interno Bruto nacional, pero enfrenta una brecha de productividad significativa, registrando un crecimiento anual del 1% frente al 2.8% del total de la economía y el 3.6% de la manufactura.
+  - **Barreras y Retos en la Adopción Tecnológica:** A pesar de que el 84% de las empresas se encuentran en una etapa exploratoria utilizando herramientas como ChatGPT, existen obstáculos críticos como la falta de datos estructurados, la escasa integración entre sistemas y la alta resistencia organizacional. El desafío principal reside en que la industria mide resultados tangibles en términos de construcción física, como la entrega de apartamentos, lo que dificulta la justificación de inversiones en tecnología cuando los beneficios se centran en la optimización de procesos administrativos internos.
+- **Ejes Estratégicos y Automatización**
+  - **Ejes Estratégicos y Rutas de Implementación:** La hoja de ruta propone tres ejes de acción: Colaboración con Inteligencia Artificial, Desarrollo de Inteligencia Artificial y Talento en Inteligencia Artificial. Tras analizar 1313 casos de uso internacionales, estos se consolidaron en 12 grupos de trabajo divididos según la etapa del ciclo de vida del proyecto (factibilidad, diseño, construcción, operación). Se enfatiza la necesidad de capacitación dirigida a los tomadores de decisiones a nivel de alta gerencia para acelerar la adopción.
+  - **Oportunidades de Victorias Rápidas y Automatización:** El equipo identifica oportunidades inmediatas en áreas administrativas, financieras y de control de riesgos, como la automatización de contratos y la gestión de proveedores. Se menciona como caso de referencia Build Technologies Draw Agent, que logró una aceleración del 60% en los tiempos de revisión, y se propone adaptar soluciones existentes al contexto colombiano en lugar de desarrollar nuevas herramientas desde cero.
+- **Modelo de Servicios y Transferencia Universitaria**
+  - **Modelo de Servicios Propuesto para el Mercado:** Juan David propone ofrecer un servicio estructurado que incluya diagnóstico de madurez, plan de adopción, acompañamiento en pilotos y retención de gobernanza. El modelo busca capitalizar el conocimiento existente para vender soluciones concretas, evitando reinventar la rueda y enfocándose en la implementación práctica de soluciones como la configuración de agentes para reconocimiento óptico de caracteres o transcripción automatizada.
+  - **Alianzas y Ejecución desde la Universidad:** El equipo discute la posibilidad de utilizar el área de extensión de la universidad como un puente para facilitar el contacto con empresas. La estrategia consiste en ofrecer capacitaciones de seis semanas dirigidas a ejecutivos para resolver problemas específicos, respaldados por la institución, y eventualmente aplicar este modelo de consultoría en otros sectores, incluyendo el público, donde existen necesidades de transformación digital y gestión de datos.
+- **Recursos y Presentaciones**
+  - [Hoja de Ruta de Productividad y Digitalización Camacol](https://camacol.co/productividad-sectorial/hoja-de-ruta)
+  - [Presentación de la Hoja de Ruta IA de Camacol](https://docs.google.com/presentation/d/1OeEnP2YqcFvZvgReEdvSEypjjAsGzfMphHSYjscZK5Q/edit?usp=sharing)
+  - [Propuesta de trabajo para el Semillero](https://docs.google.com/presentation/d/1SHGOte1-KNT4scLatVmI82-6rxRxGL3p1nH7-QruI-A/edit?usp=sharing)
+
 ## Sesión 10: 2026-09-02 — Instalando open claw y conectando con telegram
 
 - **Instalación y Prerrequisitos (Presentación de Andrés)**
