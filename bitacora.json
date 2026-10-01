@@ -1,5 +1,73 @@
 [
   {
+    "session": 12,
+    "date": "2026-09-23",
+    "title": "Soberanía Tecnológica y Automatización Agéntica con Hermes y Grapify",
+    "video": null,
+    "items": [
+      [
+        "**Soberanía Tecnológica (Presentación de La Alquimia)**",
+        [
+          "**Problema de los Sistemas Cerrados:** Plataformas cerradas (Claude, Codex, Antigravity) generan dependencia, pérdida de control y altos costos. Según La Alquimia, su modelo de negocio basado en la venta de tokens incentiva la relectura repetida de archivos y expone los proyectos (propiedad intelectual) a las empresas proveedoras.",
+          "**Alternativa con Hermes:** Hermes se propone como orquestador abierto con memoria, planificación, archivos de configuración planos y un escudo antisaturación para evitar cuotas excesivas y lecturas ciegas. Se puede operar desde Telegram, incluso por personas sin perfil técnico.",
+          "**Crítica a los Constructores Visuales:** Los constructores visuales de microservicios y bases de datos PostgreSQL pueden elevar los costos operativos a más de 500 USD mensuales por empleado."
+        ]
+      ],
+      [
+        "**Economía de los Tokens**",
+        [
+          "**Costo de un Token:** Se calcula a partir de GPU, consumo eléctrico (kWh), amortización de la inversión y rendimiento (TOPS), con analogía a los hashes en blockchain.",
+          "**Inversión en IA Local:** Entrada aproximada de 30,000 USD (cerca de 5,000 USD por GPU), lo que lleva a un costo marginal de tokens cercano a cero.",
+          "**Sostenibilidad Financiera:** Un participante menciona un análisis estadounidense según el cual, con tasas de crédito superiores al 10%, los ingresos de las empresas de IA se vuelven negativos.",
+          "**Tecnofeudalismo e Impacto Laboral:** Discusión sobre atrofia cognitiva, falsa democratización y por qué la IA afecta primero a profesiones de alto perfil intelectual (médicos, ingenieros) que a oficios físicos."
+        ]
+      ],
+      [
+        "**Arquitectura de Hermes y Teoría de Control**",
+        [
+          "**Sistemas Deterministas:** Uso de teoría de control con funciones de transferencia SISO (entrada única, salida única) para que entradas y salidas sean deterministas independientemente del modelo. Hermes Core combina lazo abierto y cerrado con autocorrección mediante archivos estructurados.",
+          "**Contención de Alucinaciones:** Cada agente cumple una tarea específica y se comunica mediante listas de tareas y dependencias condicionales, evitando que los errores se propaguen.",
+          "**soul.md:** Archivo que actúa como la \"conciencia\" o clon de la estrategia de negocio del sistema.",
+          "**Base de Datos de Mínima Transferencia:** SQLite FTS5 con latencia de 1.2 a 2 ms para evitar lecturas masivas de directorios.",
+          "**Perfiles y Permisos:** Perfiles de desarrollador específicos (ej. interfaz de usuario) con permisos restringidos para evitar accesos descontrolados."
+        ]
+      ],
+      [
+        "**Grafos con Grapify**",
+        [
+          "**Grafos Sintácticos:** Grapify genera grafos de conexiones (AST) a partir de repositorios o carpetas de PDFs, permitiendo búsquedas eficientes y auditoría del costo de cambios sin enviar el proyecto completo a servidores externos.",
+          "**Trazabilidad Histórica:** Generación automática de grafos tras cada cambio, creando un registro de la evolución del modelo de negocio.",
+          "**Complejidad Algorítmica:** Recorrer un árbol balanceado es de orden logarítmico, frente al costo lineal o cuadrático de buscar en repositorios completos.",
+          "**Precisión:** Hermes localiza el archivo y la línea exacta a modificar, ahorrando miles de tokens de contexto."
+        ]
+      ],
+      [
+        "**Flujos de Trabajo y Métricas**",
+        [
+          "**Directrices en Inglés:** Recomendación de redactar instrucciones en inglés para que los modelos no gasten razonamiento en traducción. Un agente independiente genera y actualiza la documentación indexada en el grafo.",
+          "**CI y Despliegue Local:** Pruebas unitarias y compilaciones en MacBook ARM (~2 s) frente a máquinas en la nube de 2 GB RAM y un núcleo (8 a 15 s).",
+          "**Automatización Temporal:** Flujos programados para revisar tickets e incidencias a horas fijas (ej. 7:00).",
+          "**Consumo por Comando:** ~100 tokens para listar archivos, ~800 para cambiar de directorio y ~940 para verificar estado.",
+          "**Proveedores y Cuotas:** Uso de la API de Google (hasta 500 peticiones de Gemini Flash por proyecto, 2,400 diarias en total) rotando claves para no superar 250,000 tokens por minuto. Alternativas: OpenRouter y modelos locales como Gemma 4."
+        ]
+      ],
+      [
+        "**Referencias Bibliográficas**",
+        [
+          "**Teoría de control:** Franklin et al.",
+          "**Economía política (renta del capital y capital en la nube):** Varoufakis.",
+          "**Vigilancia y telemetría:** Shoshana Zuboff."
+        ]
+      ],
+      [
+        "**Recursos**",
+        [
+          "[Diapositivas y Código (AgentAutomation)](https://github.com/LaAlquimia/AgentAutomation)"
+        ]
+      ]
+    ]
+  },
+  {
     "session": 11,
     "date": "2026-09-09",
     "title": "Innovación Digital e IA en el Sector de la Construcción",
