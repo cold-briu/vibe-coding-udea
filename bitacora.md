@@ -2,6 +2,62 @@
 
 Registro de sesiones del semillero.
 
+## Sesión 13: 2026-09-30 — Agentic Workflow con Open Code (Luis)
+
+- **Agenda y Charlas Programadas (Presentación de Andrés)**
+  - **Charlas Programadas:** Andres presenta la agenda del ciclo anterior, incluyendo flujos agénticos (Jan), Claude Code (Santi), IA para construcción con Camacol (Juanda), DeepSeek y Open Code (Luis), y la agenda de Octubre Grapify (Andres), Literate Driven Developement (Edison), introducción a Jev (Santi) y Tokenomics (Jan). Se propone abrir un taller práctico y se invita a unirse a el grupo de WhatsApp para consultas diarias.
+- **Agentic Code y Flujo de Trabajo (Presentación de Luis)**
+  - **Experiencia de Luis:** Desarrollador de software y estudiante de física con cinco años de experiencia, desde copiar y pegar código con GPT-3 hasta configuraciones agénticas actuales. Señala la abrumación generada por la cantidad de enfoques y palabras de moda semanales, y advierte sobre el uso ineficiente de múltiples agentes que consumen tokens sin un objetivo claro.
+  - **Herramientas, Arneses y Modelos:** Luis usa Open Code por ser un derivado económico de Claude Code. Define un agente como un contenedor de un modelo de lenguaje con capacidad de ejecutar herramientas, y un arnés (Open Code, VS Code, Cursor) como lo que controla el entorno y las reglas del agente. Prefiere DeepSeek por su consistencia y bajo costo frente a OpenAI y Claude.
+  - **Arquitectura del Flujo de Trabajo:** Arquitectura basada en archivos y carpetas locales (`.agent/`) en lugar de paquetes externos, con roles definidos: un agente orquestador central, un agente revisor y agentes de ejecución de tareas, apoyados en archivos Markdown y scripts de shell para mantener determinabilidad y evitar alucinaciones.
+  - **Agente Único vs. Múltiples:** Un único agente coordinador evita fragmentación y ramas huérfanas frente a esquemas de múltiples agentes independientes comunicándose entre sí.
+  - **Especificación y Estados:** Las especificaciones se definen con modelos de alto razonamiento (ChatGPT, Claude) antes de pasar la implementación a DeepSeek. El estado del proyecto (tareas, alcances, dependencias) se registra en archivos YAML y *worktrees* aislados, estructurando las tareas concurrentes como un grafo dirigido acíclico.
+  - **Pipeline de Verificación y Control de Calidad:** Cada tarea pasa por un script `verify.sh` que ejecuta pruebas unitarias, de extremo a extremo y de tipado, seguido de revisión por el agente revisor. Los errores se registran de forma determinista en el repositorio para que agentes futuros los conozcan, y se limitan las ejecuciones de subagentes para evitar consumo desmedido de tokens. Se mantiene una etiqueta de "good commit" sin errores conocidos; ante un fallo, se usan pruebas automatizadas y Git Bisect para aislar el commit exacto que introdujo el error, en lugar de acumular parches superficiales.
+  - **Limitaciones y Mejoras Futuras:** El agente orquestador único genera un cuello de botella operativo, y la falta de aislamiento estricto en contenedores exige confianza ciega en la ejecución automática de Open Code. Mejoras propuestas: restricciones estrictas en los arneses para limitar qué archivos pueden modificar los agentes, evaluaciones automáticas del flujo, y métricas de tiempo, consumo de tokens y errores.
+  - **Riesgos y Filosofía de Trabajo:** Ante el riesgo de que la IA corrompa las pruebas automatizadas para forzar resultados positivos, Luis reafirma la importancia de la supervisión humana directa y el desarrollo guiado por pruebas. Argumenta en contra de frameworks excesivamente complejos (como Orca), defendiendo estructuras ligeras y controladas para reducir la fatiga por herramientas. Ruta de aprendizaje: investigación independiente, cursos de Deeplearning.com, tendencias en Twitter y experiencia práctica en una empresa de tecnología médica en México. Al iniciar un repositorio: `git init`, carpetas de configuración de agentes y bases conversacionales antes de codificar.
+- **Presupuesto y Costos de Tokens**
+  - **Análisis Financiero y Cotizaciones:** `lab financiero` plantea cómo organizar presupuestos y cotizaciones considerando horas-hombre frente al gasto en tokens de suscripciones de IA, y la relevancia de calcular esa proporción al cotizar.
+  - **Etapas del Desarrollo y Optimización:** División del software en dos etapas: definición inicial de especificaciones y desarrollo/mantenimiento continuo. La especificación inicial funcionó mejor con un solo agente consciente, frente a la tendencia de la industria de usar hasta 90 agentes para problemas simples. Se destaca un caso con resultado equivalente al de Claude con 80 agentes, pero con un solo agente, reduciendo costos de 1,000 a 100 dólares. El desarrollo continuo puede beneficiarse de agentes múltiples u orquestados, pero la fase inicial se beneficia de supervisión humana directa con un único agente.
+- **Metodología para Compiladores (Presentación de Cuauhtemoc Pacheco Diaz)**
+  - **Desarrollo de Compilador en C:** Presenta una metodología con la que creó un compilador de C desde cero en siete semanas. Señala que las metodologías asistidas por IA actuales fallan en la incomprensibilidad del código y la dificultad de actualizar sistemas complejos.
+  - **Control de Complejidad y Ejecución de Kernel/Doom:** Con su propuesta, el código se entiende desde la primera línea y el primer día, controlando la complejidad de forma sencilla y económica con una suscripción de 100 dólares de Claude Code, logrando compilar el kernel de Linux y ejecutar Doom.
+  - **Mitigación de Alucinaciones:** Las alucinaciones de la IA prácticamente desaparecen, permitiendo que la herramienta actúe como coautora y colega en la depuración y corrección rápida de errores.
+
+## Sesión 12: 2026-09-23 — Soberanía Tecnológica y Automatización Agéntica con Hermes y Grapify
+
+- **Soberanía Tecnológica (Presentación de La Alquimia)**
+  - **Problema de los Sistemas Cerrados:** Plataformas cerradas (Claude, Codex, Antigravity) generan dependencia, pérdida de control y altos costos. Según La Alquimia, su modelo de negocio basado en la venta de tokens incentiva la relectura repetida de archivos y expone los proyectos (propiedad intelectual) a las empresas proveedoras.
+  - **Alternativa con Hermes:** Hermes se propone como orquestador abierto con memoria, planificación, archivos de configuración planos y un escudo antisaturación para evitar cuotas excesivas y lecturas ciegas. Se puede operar desde Telegram, incluso por personas sin perfil técnico.
+  - **Crítica a los Constructores Visuales:** Los constructores visuales de microservicios y bases de datos PostgreSQL pueden elevar los costos operativos a más de 500 USD mensuales por empleado.
+- **Economía de los Tokens**
+  - **Costo de un Token:** Se calcula a partir de GPU, consumo eléctrico (kWh), amortización de la inversión y rendimiento (TOPS), con analogía a los hashes en blockchain.
+  - **Inversión en IA Local:** Entrada aproximada de 30,000 USD (cerca de 5,000 USD por GPU), lo que lleva a un costo marginal de tokens cercano a cero.
+  - **Sostenibilidad Financiera:** Un participante menciona un análisis estadounidense según el cual, con tasas de crédito superiores al 10%, los ingresos de las empresas de IA se vuelven negativos.
+  - **Tecnofeudalismo e Impacto Laboral:** Discusión sobre atrofia cognitiva, falsa democratización y por qué la IA afecta primero a profesiones de alto perfil intelectual (médicos, ingenieros) que a oficios físicos.
+- **Arquitectura de Hermes y Teoría de Control**
+  - **Sistemas Deterministas:** Uso de teoría de control con funciones de transferencia SISO (entrada única, salida única) para que entradas y salidas sean deterministas independientemente del modelo. Hermes Core combina lazo abierto y cerrado con autocorrección mediante archivos estructurados.
+  - **Contención de Alucinaciones:** Cada agente cumple una tarea específica y se comunica mediante listas de tareas y dependencias condicionales, evitando que los errores se propaguen.
+  - **soul.md:** Archivo que actúa como la "conciencia" o clon de la estrategia de negocio del sistema.
+  - **Base de Datos de Mínima Transferencia:** SQLite FTS5 con latencia de 1.2 a 2 ms para evitar lecturas masivas de directorios.
+  - **Perfiles y Permisos:** Perfiles de desarrollador específicos (ej. interfaz de usuario) con permisos restringidos para evitar accesos descontrolados.
+- **Grafos con Grapify**
+  - **Grafos Sintácticos:** Grapify genera grafos de conexiones (AST) a partir de repositorios o carpetas de PDFs, permitiendo búsquedas eficientes y auditoría del costo de cambios sin enviar el proyecto completo a servidores externos.
+  - **Trazabilidad Histórica:** Generación automática de grafos tras cada cambio, creando un registro de la evolución del modelo de negocio.
+  - **Complejidad Algorítmica:** Recorrer un árbol balanceado es de orden logarítmico, frente al costo lineal o cuadrático de buscar en repositorios completos.
+  - **Precisión:** Hermes localiza el archivo y la línea exacta a modificar, ahorrando miles de tokens de contexto.
+- **Flujos de Trabajo y Métricas**
+  - **Directrices en Inglés:** Recomendación de redactar instrucciones en inglés para que los modelos no gasten razonamiento en traducción. Un agente independiente genera y actualiza la documentación indexada en el grafo.
+  - **CI y Despliegue Local:** Pruebas unitarias y compilaciones en MacBook ARM (~2 s) frente a máquinas en la nube de 2 GB RAM y un núcleo (8 a 15 s).
+  - **Automatización Temporal:** Flujos programados para revisar tickets e incidencias a horas fijas (ej. 7:00).
+  - **Consumo por Comando:** ~100 tokens para listar archivos, ~800 para cambiar de directorio y ~940 para verificar estado.
+  - **Proveedores y Cuotas:** Uso de la API de Google (hasta 500 peticiones de Gemini Flash por proyecto, 2,400 diarias en total) rotando claves para no superar 250,000 tokens por minuto. Alternativas: OpenRouter y modelos locales como Gemma 4.
+- **Referencias Bibliográficas**
+  - **Teoría de control:** Franklin et al.
+  - **Economía política (renta del capital y capital en la nube):** Varoufakis.
+  - **Vigilancia y telemetría:** Shoshana Zuboff.
+- **Recursos**
+  - [Diapositivas y Código (AgentAutomation)](https://github.com/LaAlquimia/AgentAutomation)
+
 ## Sesión 11: 2026-09-09 — Innovación Digital e IA en el Sector de la Construcción
 
 - **Diagnóstico y Madurez Tecnológica (Presentación de Juan David)**
