@@ -2,6 +2,38 @@
 
 Registro de sesiones del semillero.
 
+## Sesión 15: 2026-10-14 — Literate Driven Development y Programación Literaria (Temoc)
+
+- **Paradigma y Fundamentos de Literate Driven Development**
+  - **Cambio de Enfoque:** Propuesta metodológica que retoma la programación literaria de Donald Knuth (1984), cambiando el enfoque tradicional de instruir a la máquina por el de explicar a seres humanos mediante prosa, ecuaciones y fragmentos de código.
+  - **Superación de Limitaciones de IA:** Plantea resolver los problemas críticos del desarrollo asistido por IA (código incomprensible, sobrecostos de tokens, sobreingeniería y desincronización) prescindiendo de arneses complejos o múltiples agentes autónomos sin supervisión directa.
+- **Arquitectura Técnica y Metalenguaje**
+  - **Unificación de Prosa y Código:** Uso de un metalenguaje que combina lenguajes de formato (LaTeX, Markdown) y ejecución (C, Python) en archivos web como fuente única de verdad, generando tanto código ejecutable como documentación técnica (PDF/HTML).
+  - **Estructuración por Conceptos:** En lugar de fragmentar por directorios y tecnologías dispersas, el código se agrupa alrededor de conceptos funcionales transversales (ej. autenticación completa con validaciones, consultas y UI en un mismo documento conceptual).
+  - **Grafos Nativos:** La sintaxis introduce marcas inocuas para los compiladores que estructuran un grafo de conocimiento interno, permitiendo navegación e indexación precisa sin recurrir a bases de datos vectoriales externas.
+- **Casos de Éxito, Flujo y Eficiencia**
+  - **Desarrollo Incremental por Capítulos:** Flujo de trabajo iterativo semejante a escribir un libro técnico, reduciendo alucinaciones y evitando la relectura masiva del repositorio.
+  - **Sistemas Complejos y Compiladores:** Demostración de casos reales construidos con esta metodología (un compilador de C capaz de compilar el kernel de Linux en siete semanas, suites de microservicios y herramientas de audio).
+  - **Economía de Contexto:** Menor gasto computacional (~10k tokens por capítulo conceptual) frente a la sobrecarga que genera refactorizar bases de código gigantes desarticuladas.
+
+## Sesión 14: 2026-10-07 — Mapeo Topológico y Optimización con Graphify (Andrés)
+
+- **Introducción y Contexto del Semillero**
+  - **Objetivos Multidisciplinarios:** Bienvenida a nuevos participantes de diversas áreas (ingeniería, ciencias exactas, economía y consultoría de negocios). Se reitera el propósito del semillero de explorar tendencias avanzadas de desarrollo asistido por IA de forma colaborativa.
+  - **Nivelatorio de Programación:** Anuncio de sesiones nivelatorias prácticas enfocadas en fundamentos técnicos, control de versiones con GitHub y manejo de terminal para personas sin formación previa.
+- **Naturaleza Estocástica y Limitaciones de RAG Vectorial**
+  - **Mecánica de los LLMs:** Discusión sobre la naturaleza predictiva y estocástica de los modelos de lenguaje, el descenso de gradiente y los riesgos de sobreentrenamiento (overfitting).
+  - **Deficiencias de RAG Tradicional en Código:** Las bases de datos vectoriales fragmentan el código en fragmentos arbitrarios por tokens, priorizando la similitud semántica/vocabulario sobre la sintaxis y las dependencias lógicas y estructurales.
+- **Mapeo Topológico con Graphify**
+  - **Fundamentos Técnicos y AST:** Presentación de Graphify, herramienta que analiza el árbol sintáctico abstracto (AST) del código para crear mapas topológicos deterministas de dependencias, relaciones gramaticales y jerarquías sin requerir bases vectoriales permanentes.
+  - **Instalación e Integración:** Demostración de configuración con uv e integración de skills con entornos como Claude, Cursor y Gemini.
+  - **Demostración Práctica:** Extracción de comunidades de código, nodos y aristas en proyectos JavaScript/React, generando grafos interactivos en HTML e índices estructurados en JSON que documentan tanto código fuente como archivos Markdown.
+  - **Optimización de Contexto Agéntico:** Los agentes de IA consultan directamente el grafo determinista (`graphify explain`), identificando puntos de entrada, dependencias y arquitectura sin necesidad de leer exhaustivamente cada archivo, reduciendo el consumo de tokens y la latencia.
+- **Enfoques Híbridos, Literatura y Fronteras Científicas**
+  - **Arquitecturas Híbridas y Orquestación:** Debate sobre la combinación de filtros semánticos ligeros con grafos sintácticos deterministas, así como patrones de orquestación y enrutamiento en la industria.
+  - **Literate Driven Development:** Exploración de metodologías orientadas a la literatura y grafos de conocimiento aplicados a libros y documentación técnica para mejorar la legibilidad y navegación humana y de agentes.
+  - **Resolución de Problemas Científicos con IA:** Discusión sobre avances recientes en la resolución automática y demostración formal de problemas matemáticos y físicos complejos, y el análisis de sus implicaciones.
+
 ## Sesión 13: 2026-09-30 — Agentic Workflow con Open Code (Luis)
 
 - **Agenda y Charlas Programadas (Presentación de Andrés)**
