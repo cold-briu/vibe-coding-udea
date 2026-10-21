@@ -2,6 +2,20 @@
 
 Registro de sesiones del semillero.
 
+## Sesión 15: 2026-10-14 — Literate Driven Development y Programación Literaria (Temoc)
+
+- **Paradigma y Fundamentos de Literate Driven Development**
+  - **Cambio de Enfoque:** Propuesta metodológica que retoma la programación literaria de Donald Knuth (1984), cambiando el enfoque tradicional de instruir a la máquina por el de explicar a seres humanos mediante prosa, ecuaciones y fragmentos de código.
+  - **Superación de Limitaciones de IA:** Plantea resolver los problemas críticos del desarrollo asistido por IA (código incomprensible, sobrecostos de tokens, sobreingeniería y desincronización) prescindiendo de arneses complejos o múltiples agentes autónomos sin supervisión directa.
+- **Arquitectura Técnica y Metalenguaje**
+  - **Unificación de Prosa y Código:** Uso de un metalenguaje que combina lenguajes de formato (LaTeX, Markdown) y ejecución (C, Python) en archivos web como fuente única de verdad, generando tanto código ejecutable como documentación técnica (PDF/HTML).
+  - **Estructuración por Conceptos:** En lugar de fragmentar por directorios y tecnologías dispersas, el código se agrupa alrededor de conceptos funcionales transversales (ej. autenticación completa con validaciones, consultas y UI en un mismo documento conceptual).
+  - **Grafos Nativos:** La sintaxis introduce marcas inocuas para los compiladores que estructuran un grafo de conocimiento interno, permitiendo navegación e indexación precisa sin recurrir a bases de datos vectoriales externas.
+- **Casos de Éxito, Flujo y Eficiencia**
+  - **Desarrollo Incremental por Capítulos:** Flujo de trabajo iterativo semejante a escribir un libro técnico, reduciendo alucinaciones y evitando la relectura masiva del repositorio.
+  - **Sistemas Complejos y Compiladores:** Demostración de casos reales construidos con esta metodología (un compilador de C capaz de compilar el kernel de Linux en siete semanas, suites de microservicios y herramientas de audio).
+  - **Economía de Contexto:** Menor gasto computacional (~10k tokens por capítulo conceptual) frente a la sobrecarga que genera refactorizar bases de código gigantes desarticuladas.
+
 ## Sesión 14: 2026-10-07 — Mapeo Topológico y Optimización con Graphify (Andrés)
 
 - **Introducción y Contexto del Semillero**
