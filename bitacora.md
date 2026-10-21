@@ -2,6 +2,24 @@
 
 Registro de sesiones del semillero.
 
+## Sesión 14: 2026-10-07 — Mapeo Topológico y Optimización con Graphify (Andrés)
+
+- **Introducción y Contexto del Semillero**
+  - **Objetivos Multidisciplinarios:** Bienvenida a nuevos participantes de diversas áreas (ingeniería, ciencias exactas, economía y consultoría de negocios). Se reitera el propósito del semillero de explorar tendencias avanzadas de desarrollo asistido por IA de forma colaborativa.
+  - **Nivelatorio de Programación:** Anuncio de sesiones nivelatorias prácticas enfocadas en fundamentos técnicos, control de versiones con GitHub y manejo de terminal para personas sin formación previa.
+- **Naturaleza Estocástica y Limitaciones de RAG Vectorial**
+  - **Mecánica de los LLMs:** Discusión sobre la naturaleza predictiva y estocástica de los modelos de lenguaje, el descenso de gradiente y los riesgos de sobreentrenamiento (overfitting).
+  - **Deficiencias de RAG Tradicional en Código:** Las bases de datos vectoriales fragmentan el código en fragmentos arbitrarios por tokens, priorizando la similitud semántica/vocabulario sobre la sintaxis y las dependencias lógicas y estructurales.
+- **Mapeo Topológico con Graphify**
+  - **Fundamentos Técnicos y AST:** Presentación de Graphify, herramienta que analiza el árbol sintáctico abstracto (AST) del código para crear mapas topológicos deterministas de dependencias, relaciones gramaticales y jerarquías sin requerir bases vectoriales permanentes.
+  - **Instalación e Integración:** Demostración de configuración con uv e integración de skills con entornos como Claude, Cursor y Gemini.
+  - **Demostración Práctica:** Extracción de comunidades de código, nodos y aristas en proyectos JavaScript/React, generando grafos interactivos en HTML e índices estructurados en JSON que documentan tanto código fuente como archivos Markdown.
+  - **Optimización de Contexto Agéntico:** Los agentes de IA consultan directamente el grafo determinista (`graphify explain`), identificando puntos de entrada, dependencias y arquitectura sin necesidad de leer exhaustivamente cada archivo, reduciendo el consumo de tokens y la latencia.
+- **Enfoques Híbridos, Literatura y Fronteras Científicas**
+  - **Arquitecturas Híbridas y Orquestación:** Debate sobre la combinación de filtros semánticos ligeros con grafos sintácticos deterministas, así como patrones de orquestación y enrutamiento en la industria.
+  - **Literate Driven Development:** Exploración de metodologías orientadas a la literatura y grafos de conocimiento aplicados a libros y documentación técnica para mejorar la legibilidad y navegación humana y de agentes.
+  - **Resolución de Problemas Científicos con IA:** Discusión sobre avances recientes en la resolución automática y demostración formal de problemas matemáticos y físicos complejos, y el análisis de sus implicaciones.
+
 ## Sesión 13: 2026-09-30 — Agentic Workflow con Open Code (Luis)
 
 - **Agenda y Charlas Programadas (Presentación de Andrés)**
